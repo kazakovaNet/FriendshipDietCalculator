@@ -1,4 +1,4 @@
-package ru.kazakova_net.friendshipdietcalculator.app;
+package ru.kazakova_net.friendshipdietcalculator.application;
 
 import android.app.Application;
 import android.arch.persistence.room.Room;
@@ -21,7 +21,7 @@ public class App extends Application {
                 .build();
     }
     
-    public AppDatabase getDb() {
+    public static AppDatabase getAppDatabase() {
         return appDatabase;
     }
 }

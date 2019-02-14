@@ -1,9 +1,6 @@
 package ru.kazakova_net.friendshipdietcalculator.model;
 
-import android.content.Context;
-
-import java.util.ArrayList;
-import java.util.List;
+import ru.kazakova_net.friendshipdietcalculator.application.App;
 
 /**
  * Created by nkazakova on 14/02/2019.
@@ -12,9 +9,7 @@ public class ProductLab {
     
     private static ProductLab productLab;
     
-    private List<Product> productList;
-    
-    public static ProductLab get(Context context) {
+    public static ProductLab get() {
         if (productLab == null) {
             productLab = new ProductLab();
         }
@@ -23,10 +18,9 @@ public class ProductLab {
     }
     
     private ProductLab() {
-        productList = new ArrayList<>();
     }
     
-    public void addProduct(Product p){
-        productList.add(p);
+    public void addProduct(Product p) {
+        App.getAppDatabase().productDao().insertAll(p);
     }
 }

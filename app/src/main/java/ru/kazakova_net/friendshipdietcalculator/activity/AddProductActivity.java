@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -32,6 +33,27 @@ public class AddProductActivity extends AppCompatActivity implements View.OnClic
     
     @Override
     public void onClick(View view) {
+        saveProduct();
+    
+        completeSaving(view);
+    }
+    
+    private void completeSaving(View view) {
+        Snackbar.make(view, "Продукт сохранён в базу данных", Snackbar.LENGTH_SHORT).show();
+    
+        resetInputs();
+    }
+    
+    private void resetInputs() {
+        binding.addProductTitleInput.setText("");
+        binding.addProductProteinsInput.setText("");
+        binding.addProductFatsInput.setText("");
+        binding.addProductCarbohydratesInput.setText("");
+        binding.addProductCaloriesInput.setText("");
+        binding.addProductFromBsChk.setChecked(true);
+    }
+    
+    private void saveProduct() {
         Product product = new Product();
         product.setTitle(binding.addProductTitleInput.getText().toString());
         product.setProteins(Double.parseDouble(binding.addProductProteinsInput.getText().toString()));
@@ -40,6 +62,6 @@ public class AddProductActivity extends AppCompatActivity implements View.OnClic
         product.setCalories(Double.parseDouble(binding.addProductCaloriesInput.getText().toString()));
         product.setFromBS((byte) (binding.addProductFromBsChk.isChecked() ? 1 : 0));
         
-        ProductLab.get(getApplicationContext()).addProduct(product);
+        ProductLab.get().addProduct(product);
     }
 }
