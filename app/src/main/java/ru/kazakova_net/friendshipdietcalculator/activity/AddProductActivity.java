@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 
 import ru.kazakova_net.friendshipdietcalculator.R;
@@ -33,13 +34,49 @@ public class AddProductActivity extends AppCompatActivity implements View.OnClic
     
     @Override
     public void onClick(View view) {
-        saveProduct();
+        if (validateInput()){
+            saveProduct();
     
-        completeSaving(view);
+            completeSaving(view);
+        }
+    }
+    
+    private boolean validateInput() {
+        if (TextUtils.isEmpty(binding.addProductTitleInput.getText().toString())){
+            binding.addProductTitleInput.setError(getString(R.string.add_product_invalid_input_msg));
+            
+            return false;
+        }
+    
+        if (TextUtils.isEmpty(binding.addProductProteinsInput.getText().toString())){
+            binding.addProductProteinsInput.setError(getString(R.string.add_product_invalid_input_msg));
+        
+            return false;
+        }
+    
+        if (TextUtils.isEmpty(binding.addProductFatsInput.getText().toString())){
+            binding.addProductFatsInput.setError(getString(R.string.add_product_invalid_input_msg));
+        
+            return false;
+        }
+    
+        if (TextUtils.isEmpty(binding.addProductCarbohydratesInput.getText().toString())){
+            binding.addProductCarbohydratesInput.setError(getString(R.string.add_product_invalid_input_msg));
+        
+            return false;
+        }
+    
+        if (TextUtils.isEmpty(binding.addProductCaloriesInput.getText().toString())){
+            binding.addProductCaloriesInput.setError(getString(R.string.add_product_invalid_input_msg));
+        
+            return false;
+        }
+        
+        return true;
     }
     
     private void completeSaving(View view) {
-        Snackbar.make(view, "Продукт сохранён в базу данных", Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(view, R.string.add_product_success_msg, Snackbar.LENGTH_SHORT).show();
     
         resetInputs();
     }

@@ -10,4 +10,6 @@
     <string name="add_product_carbohydrates_hint">Углеводы</string>
     <string name="add_product_calories_hint">Ккал</string>
     <string name="add_product_from_bs_text">Взято из книги \"Будь стройной\"</string>
+    <string name="add_product_success_msg">Продукт сохранён в базу данных</string>
+    <string name="add_product_invalid_input_msg">Введите значение</string>
 </resources>
