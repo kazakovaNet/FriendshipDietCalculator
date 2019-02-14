@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Friendship Diet Calculator</string>
+    <string name="add_food_intake_btn_text">Добавить прием пищи</string>
+    <string name="add_new_product_btn_text">Добавить продукт</string>
+    <string name="add_product_activity_label">Новый продукт</string>
+    <string name="add_product_title_hint">Название</string>
+    <string name="add_product_save_btn_text">Сохранить продукт</string>
+    <string name="add_product_proteins_hint">Белки</string>
+    <string name="add_product_fats_hint">Жиры</string>
+    <string name="add_product_carbohydrates_hint">Углеводы</string>
+    <string name="add_product_calories_hint">Ккал</string>
+</resources>
