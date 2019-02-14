@@ -38,7 +38,8 @@ public class AddProductActivity extends AppCompatActivity implements View.OnClic
         product.setFats(Double.parseDouble(binding.addProductFatsInput.getText().toString()));
         product.setCarbohydrates(Double.parseDouble(binding.addProductCarbohydratesInput.getText().toString()));
         product.setCalories(Double.parseDouble(binding.addProductCaloriesInput.getText().toString()));
-    
+        product.setFromBS((byte) (binding.addProductFromBsChk.isChecked() ? 1 : 0));
+        
         ProductLab.get(getApplicationContext()).addProduct(product);
     }
 }

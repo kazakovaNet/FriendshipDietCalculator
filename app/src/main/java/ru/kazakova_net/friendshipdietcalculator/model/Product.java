@@ -9,13 +9,15 @@ public class Product {
     private double fats;
     private double carbohydrates;
     private double calories;
+    private byte fromBS;
     
-    public Product(String title, double proteins, double fats, double carbohydrates, double calories) {
+    public Product(String title, double proteins, double fats, double carbohydrates, double calories, byte fromBS) {
         this.title = title;
         this.proteins = proteins;
         this.fats = fats;
         this.carbohydrates = carbohydrates;
         this.calories = calories;
+        this.fromBS = fromBS;
     }
     
     public Product() {
@@ -59,5 +61,13 @@ public class Product {
     
     public void setCalories(double calories) {
         this.calories = calories;
+    }
+    
+    public byte getFromBS() {
+        return fromBS;
+    }
+    
+    public void setFromBS(byte fromBS) {
+        this.fromBS = fromBS;
     }
 }

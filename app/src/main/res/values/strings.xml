@@ -9,4 +9,5 @@
     <string name="add_product_fats_hint">Жиры</string>
     <string name="add_product_carbohydrates_hint">Углеводы</string>
     <string name="add_product_calories_hint">Ккал</string>
+    <string name="add_product_from_bs_text">Взято из книги \"Будь стройной\"</string>
 </resources>
