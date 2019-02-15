@@ -11,8 +11,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".activity.AddFoodIntakeActivity"
+            android:label="@string/add_food_intake_activity_label" />
+        <activity android:name=".activity.ListProductsActivity" />
+        <activity
             android:name=".activity.AddProductActivity"
-            android:label="@string/add_product_activity_label"></activity>
+            android:label="@string/add_product_activity_label" />
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

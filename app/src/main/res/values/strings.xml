@@ -1,8 +1,13 @@
 <resources>
     <string name="app_name">Friendship Diet Calculator</string>
-    <string name="add_food_intake_btn_text">Добавить прием пищи</string>
-    <string name="add_new_product_btn_text">Добавить продукт</string>
+
+    <string name="main_menu_add_food_intake_btn_text">Добавить прием пищи</string>
+    <string name="main_menu_add_new_product_btn_text">Добавить продукт</string>
+    <string name="main_menu_list_products_btn_text">Список сохраненных продуктов</string>
+
     <string name="add_product_activity_label">Новый продукт</string>
+    <string name="add_food_intake_activity_label">Новый прием пищи</string>
+
     <string name="add_product_title_hint">Название</string>
     <string name="add_product_save_btn_text">Сохранить продукт</string>
     <string name="add_product_proteins_hint">Белки</string>
@@ -12,4 +17,14 @@
     <string name="add_product_from_bs_text">Взято из книги \"Будь стройной\"</string>
     <string name="add_product_success_msg">Продукт сохранён в базу данных</string>
     <string name="add_product_invalid_input_msg">Введите значение</string>
+    
+    <string name="type_intake_breakfast">Завтрак</string>
+    <string name="type_intake_lunch">Второй завтрак</string>
+    <string name="type_intake_dinner">Обед</string>
+    <string name="type_intake_afternoon_tea">Полдник</string>
+    <string name="type_intake_supper">Ужин</string>
+
+    <string name="add_food_intake_type_label_text">Прием пищи</string>
+    <string name="add_food_intake_save_btn_text">Сохранить прием пищи</string>
+
 </resources>

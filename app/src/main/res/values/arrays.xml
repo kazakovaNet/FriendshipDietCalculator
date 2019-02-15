@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="type_food_intake">
+        <item>@string/type_intake_breakfast</item>
+        <item>@string/type_intake_lunch</item>
+        <item>@string/type_intake_dinner</item>
+        <item>@string/type_intake_afternoon_tea</item>
+        <item>@string/type_intake_supper</item>
+    </array>
+</resources>
