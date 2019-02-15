@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Dao
 public interface ProductDao {
-    @Query("SELECT * FROM products")
+    @Query("SELECT * FROM products ORDER BY title")
     List<Product> getAll();
     
     @Insert

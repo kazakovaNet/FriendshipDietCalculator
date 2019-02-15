@@ -1,5 +1,7 @@
 package ru.kazakova_net.friendshipdietcalculator.model;
 
+import java.util.List;
+
 import ru.kazakova_net.friendshipdietcalculator.application.App;
 
 /**
@@ -22,5 +24,9 @@ public class ProductLab {
     
     public void addProduct(Product p) {
         App.getAppDatabase().productDao().insertAll(p);
+    }
+    
+    public List<Product> getAllProducts(){
+        return App.getAppDatabase().productDao().getAll();
     }
 }
