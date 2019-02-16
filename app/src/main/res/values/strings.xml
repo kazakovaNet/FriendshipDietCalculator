@@ -37,5 +37,9 @@
     <string name="product_row_count_hint">Количество</string>
     <string name="add_food_intake_add_product_row_btn_text">Ещё…</string>
     <string name="add_food_intake_add_new_product_btn_text">Новый продукт</string>
+    <string name="product_row_proteins_label_text">Б:</string>
+    <string name="product_row_fats_label_text">Ж:</string>
+    <string name="product_row_carbohydrates_label_text">У:</string>
+    <string name="product_row_calories_label_text">Ккал</string>
 
 </resources>

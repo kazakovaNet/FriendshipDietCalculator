@@ -9,8 +9,8 @@
     </array>
 
     <array name="product_count">
-        <item>@string/product_count_milligram</item>
         <item>@string/product_count_gram</item>
+        <item>@string/product_count_milligram</item>
         <item>@string/product_count_teaspoon</item>
         <item>@string/product_count_table_spoon</item>
         <item>@string/product_count_pcs</item>

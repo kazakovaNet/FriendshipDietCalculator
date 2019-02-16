@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -31,6 +32,7 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
     
     private AddFoodIntakeActivityBinding binding;
     private FoodIntake foodIntake;
+    private Product product;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,16 +47,10 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
         binding.addFoodIntakeSaveBtn.setOnClickListener(this);
         binding.addFoodIntakeAddProductRowBtn.setOnClickListener(this);
         
+        addProductRow();
+        
         updateDate();
         updateTime();
-    
-        initProductRow();
-    }
-    
-    private void addProductRow() {
-        View view = LayoutInflater.from(this).inflate(R.layout.product_row, null, false);
-        binding.addFoodIntakeProductsRootView
-                .addView(view, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     }
     
     public static Intent getIntent(Context context) {
@@ -84,23 +80,73 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
                 break;
             case R.id.add_food_intake_add_product_row_btn:
                 addProductRow();
-                
-                initProductRow();
                 break;
             
         }
     }
     
-    private void initProductRow() {
-        int childCount = binding.addFoodIntakeProductsRootView.getChildCount();
-        ConstraintLayout parent =
-                (ConstraintLayout) binding.addFoodIntakeProductsRootView.getChildAt(childCount - 1);
+    private void addProductRow() {
+        View productsRootView = LayoutInflater.from(this).inflate(R.layout.product_row, binding.addFoodIntakeProductsRootView, false);
         
+        initProductRow(productsRootView);
+        
+        binding.addFoodIntakeProductsRootView
+                .addView(productsRootView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+    }
+    
+    private void initProductRow(final View productRootView) {
         List<Product> allProducts = ProductLab.get().getAllProducts();
         ArrayAdapter<Product> productArrayAdapter = new ArrayAdapter<>(AddFoodIntakeActivity.this, android.R.layout.simple_list_item_1, allProducts);
         
-        AutoCompleteTextView productNameTextView = parent.findViewById(R.id.product_row_name);
+        AutoCompleteTextView productNameTextView = productRootView.findViewById(R.id.product_row_name);
         productNameTextView.setAdapter(productArrayAdapter);
+        productNameTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                product = (Product) adapterView.getItemAtPosition(i);
+    
+                displayCalculation(productRootView);
+            }
+        });
+        
+        TextView productCountTextView = productRootView.findViewById(R.id.product_row_count);
+        productCountTextView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (textView.getText().toString().equals("")){
+                    return true;
+                }
+                
+                
+                
+                return true;
+            }
+        });
+    }
+    
+    private void displayCalculation(View productsRootView) {
+        TextView proteinsTextView = productsRootView.findViewById(R.id.product_row_proteins);
+        TextView fatsTextView = productsRootView.findViewById(R.id.product_row_fats);
+        TextView carbohydratesTextView = productsRootView.findViewById(R.id.product_row_carbohydrates);
+        TextView caloriesTextView = productsRootView.findViewById(R.id.product_row_calories);
+        TextView productCount = productsRootView.findViewById(R.id.product_row_count);
+        
+        String weightProduct = productCount.getText().toString();
+        
+        if (weightProduct.equals("")){
+            return;
+        }
+        
+        proteinsTextView.setText(calcElements(product.getProteins(), Double.parseDouble(weightProduct)));
+        fatsTextView.setText(calcElements(product.getFats(), Double.parseDouble(weightProduct)));
+        carbohydratesTextView.setText(calcElements(product.getCarbohydrates(), Double.parseDouble(weightProduct)));
+        caloriesTextView.setText(calcElements(product.getCalories(), Double.parseDouble(weightProduct)));
+    }
+    
+    private String calcElements(double absAmountElement, double weightProduct) {
+        double result = weightProduct * absAmountElement / 100;
+        
+        return String.valueOf(result);
     }
     
     @Override
