@@ -32,7 +32,7 @@ import ru.kazakova_net.friendshipdietcalculator.model.Product;
 import ru.kazakova_net.friendshipdietcalculator.model.ProductLab;
 import ru.kazakova_net.friendshipdietcalculator.util.CommonUtil;
 
-public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     
     private AddFoodIntakeActivityBinding binding;
     private FoodIntake foodIntake;
@@ -44,14 +44,18 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
         setContentView(R.layout.activity_add_food_intake);
         
         foodIntake = new FoodIntake();
-        long foodIntakeId = FoodIntakeLab.get().add(foodIntake);
+        long foodIntakeId = saveFoodIntake(foodIntake);
         foodIntake.setId(foodIntakeId);
         foodIntake.setTimeMillis(System.currentTimeMillis());
         
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_food_intake);
         binding.addFoodIntakeTypeSpinner.setOnItemSelectedListener(this);
-        binding.addFoodIntakeSaveBtn.setOnClickListener(this);
-        binding.addFoodIntakeAddProductRowBtn.setOnClickListener(this);
+        binding.addFoodIntakeAddProductRowBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addProductRow();
+            }
+        });
         
         addProductRow();
         
@@ -69,26 +73,25 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
             case R.id.add_food_intake_type_spinner:
                 String foodIntakeType = (String) adapterView.getItemAtPosition(i);
                 foodIntake.setType(foodIntakeType);
+                
+                saveFoodIntake(foodIntake);
                 break;
+        }
+    }
+    
+    private long saveFoodIntake(FoodIntake foodIntake) {
+        if (FoodIntakeLab.get().isSaved(foodIntake.getId())){
+            FoodIntakeLab.get().update(foodIntake);
+            
+            return foodIntake.getId();
+        } else {
+            return FoodIntakeLab.get().add(foodIntake);
         }
     }
     
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
     
-    }
-    
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.add_food_intake_save_btn:
-                FoodIntakeLab.get().update(foodIntake);
-                break;
-            case R.id.add_food_intake_add_product_row_btn:
-                addProductRow();
-                break;
-            
-        }
     }
     
     private void addProductRow() {

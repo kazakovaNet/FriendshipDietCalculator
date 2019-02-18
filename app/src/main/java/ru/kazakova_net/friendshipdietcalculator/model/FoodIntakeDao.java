@@ -7,6 +7,7 @@ import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by nkazakova on 15/02/2019.
@@ -24,4 +25,7 @@ public interface FoodIntakeDao {
     
     @Delete
     void delete(FoodIntake foodIntake);
+    
+    @Query("SELECT * FROM food_intake WHERE id = :foodIntakeId")
+    FoodIntake getById(long foodIntakeId);
 }

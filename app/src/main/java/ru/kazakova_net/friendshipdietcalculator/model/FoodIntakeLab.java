@@ -25,6 +25,10 @@ public class FoodIntakeLab {
         return ids[0];
     }
     
+    public boolean isSaved(long foodIntakeId){
+        return App.getAppDatabase().foodIntakeDao().getById(foodIntakeId) != null;
+    }
+    
     public void update(FoodIntake f){
         App.getAppDatabase().foodIntakeDao().updateAll(f);
     }
