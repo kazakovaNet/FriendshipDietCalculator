@@ -13,7 +13,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -104,46 +106,50 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 product = (Product) adapterView.getItemAtPosition(i);
+            }
+        });
     
+        Button productCalcButton = productRootView.findViewById(R.id.product_row_calc_btn);
+        productCalcButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 displayCalculation(productRootView);
             }
         });
-        
-        TextView productCountTextView = productRootView.findViewById(R.id.product_row_count);
-        productCountTextView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                if (textView.getText().toString().equals("")){
-                    return true;
-                }
-                
-                
-                
-                return true;
-            }
-        });
     }
     
-    private void displayCalculation(View productsRootView) {
-        TextView proteinsTextView = productsRootView.findViewById(R.id.product_row_proteins);
-        TextView fatsTextView = productsRootView.findViewById(R.id.product_row_fats);
-        TextView carbohydratesTextView = productsRootView.findViewById(R.id.product_row_carbohydrates);
-        TextView caloriesTextView = productsRootView.findViewById(R.id.product_row_calories);
-        TextView productCount = productsRootView.findViewById(R.id.product_row_count);
-        
-        String weightProduct = productCount.getText().toString();
-        
-        if (weightProduct.equals("")){
+    private void displayCalculation(View productRootView) {
+        TextView productCountTextView = productRootView.findViewById(R.id.product_row_count);
+        if (productCountTextView.getText().toString().equals("")) {
             return;
         }
         
-        proteinsTextView.setText(calcElements(product.getProteins(), Double.parseDouble(weightProduct)));
-        fatsTextView.setText(calcElements(product.getFats(), Double.parseDouble(weightProduct)));
-        carbohydratesTextView.setText(calcElements(product.getCarbohydrates(), Double.parseDouble(weightProduct)));
-        caloriesTextView.setText(calcElements(product.getCalories(), Double.parseDouble(weightProduct)));
+        TextView proteinsTextView = productRootView.findViewById(R.id.product_row_proteins);
+        TextView fatsTextView = productRootView.findViewById(R.id.product_row_fats);
+        TextView carbohydratesTextView = productRootView.findViewById(R.id.product_row_carbohydrates);
+        TextView caloriesTextView = productRootView.findViewById(R.id.product_row_calories);
+        Spinner productCountUnitSpinner = productRootView.findViewById(R.id.product_row_count_unit);
+        
+        double weightProduct = Double.parseDouble(productCountTextView.getText().toString());
+        String productCountUnit = (String) productCountUnitSpinner.getSelectedItem();
+        
+        proteinsTextView.setText(calcElements(product.getProteins(), weightProduct, productCountUnit));
+        fatsTextView.setText(calcElements(product.getFats(), weightProduct, productCountUnit));
+        carbohydratesTextView.setText(calcElements(product.getCarbohydrates(), weightProduct, productCountUnit));
+        caloriesTextView.setText(calcElements(product.getCalories(), weightProduct, productCountUnit));
     }
     
-    private String calcElements(double absAmountElement, double weightProduct) {
+    private String calcElements(double absAmountElement, double weightProduct, String productCountUnit) {
+        if (productCountUnit.equals(getString(R.string.product_count_milligram))) {
+            weightProduct /= 1000;
+        } else if (productCountUnit.equals(getString(R.string.product_count_pcs))) {
+            weightProduct = 1;
+        } else if (productCountUnit.equals(getString(R.string.product_count_teaspoon))) {
+            weightProduct = 4;
+        } else if (productCountUnit.equals(getString(R.string.product_count_table_spoon))) {
+            weightProduct = 8;
+        }
+        
         double result = weightProduct * absAmountElement / 100;
         
         return String.valueOf(result);

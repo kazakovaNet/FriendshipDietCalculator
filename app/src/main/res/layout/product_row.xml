@@ -38,9 +38,9 @@
         app:layout_constraintTop_toBottomOf="@+id/product_row_name">
 
         <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="2">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/product_row_count"
@@ -51,12 +51,31 @@
         </android.support.design.widget.TextInputLayout>
 
         <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="match_parent"
+            android:id="@+id/product_row_count_unit"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:entries="@array/product_count" />
+            android:entries="@array/product_count_unit" />
+
     </LinearLayout>
+
+    <Button
+        android:id="@+id/product_row_calc_btn"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:drawableStart="@drawable/ic_calculator"
+        android:drawableLeft="@drawable/ic_calculator"
+        android:scaleType="center"
+        android:text="@string/product_row_calc_btn_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -70,7 +89,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toBottomOf="@+id/product_row_calc_btn">
 
         <TextView
             android:id="@+id/product_row_proteins_label"

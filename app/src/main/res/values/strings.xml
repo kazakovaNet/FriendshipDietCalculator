@@ -41,5 +41,6 @@
     <string name="product_row_fats_label_text">Ж:</string>
     <string name="product_row_carbohydrates_label_text">У:</string>
     <string name="product_row_calories_label_text">Ккал</string>
+    <string name="product_row_calc_btn_text">&#160;&#160;&#160;Расчитать</string>
 
 </resources>

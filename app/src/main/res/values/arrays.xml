@@ -8,7 +8,7 @@
         <item>@string/type_intake_supper</item>
     </array>
 
-    <array name="product_count">
+    <array name="product_count_unit">
         <item>@string/product_count_gram</item>
         <item>@string/product_count_milligram</item>
         <item>@string/product_count_teaspoon</item>
