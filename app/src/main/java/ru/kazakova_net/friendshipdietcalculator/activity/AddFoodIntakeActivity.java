@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -19,11 +20,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import ru.kazakova_net.friendshipdietcalculator.R;
 import ru.kazakova_net.friendshipdietcalculator.databinding.AddFoodIntakeActivityBinding;
+import ru.kazakova_net.friendshipdietcalculator.fragment.DatePickerFragment;
+import ru.kazakova_net.friendshipdietcalculator.fragment.TimePickerFragment;
 import ru.kazakova_net.friendshipdietcalculator.model.FoodIntake;
 import ru.kazakova_net.friendshipdietcalculator.model.FoodIntakeLab;
 import ru.kazakova_net.friendshipdietcalculator.model.FoodIntakeProduct;
@@ -32,8 +37,10 @@ import ru.kazakova_net.friendshipdietcalculator.model.Product;
 import ru.kazakova_net.friendshipdietcalculator.model.ProductLab;
 import ru.kazakova_net.friendshipdietcalculator.util.CommonUtil;
 
-public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, TimePickerFragment.TimeSelectListener, DatePickerFragment.DateSelectListener {
     
+    private static final String DIALOG_TIME = "DialogTime";
+    private static final String DIALOG_DATE = "DialogDate";
     private AddFoodIntakeActivityBinding binding;
     private FoodIntake foodIntake;
     private Product product;
@@ -47,6 +54,22 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
         
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_food_intake);
         binding.addFoodIntakeTypeSpinner.setOnItemSelectedListener(this);
+        binding.addFoodIntakeDateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager manager = getSupportFragmentManager();
+                DatePickerFragment dialog = DatePickerFragment.newInstance(new Date(foodIntake.getTimeMillis()));
+                dialog.show(manager, DIALOG_DATE);
+            }
+        });
+        binding.addFoodIntakeTimeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager manager = getSupportFragmentManager();
+                TimePickerFragment dialog = TimePickerFragment.newInstance(new Date(foodIntake.getTimeMillis()));
+                dialog.show(manager, DIALOG_TIME);
+            }
+        });
         binding.addFoodIntakeAddProductRowBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -205,5 +228,40 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
     
     public static Intent getIntent(Context context) {
         return new Intent(context, AddFoodIntakeActivity.class);
+    }
+    
+    @Override
+    public void onTimeSelect(Date time) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date(foodIntake.getTimeMillis()));
+        
+        Calendar newTimeCalendar = Calendar.getInstance();
+        newTimeCalendar.setTime(time);
+        
+        calendar.set(Calendar.HOUR_OF_DAY, newTimeCalendar.get(Calendar.HOUR_OF_DAY));
+        calendar.set(Calendar.MINUTE, newTimeCalendar.get(Calendar.MINUTE));
+        
+        foodIntake.setTimeMillis(calendar.getTime().getTime());
+        saveFoodIntake(foodIntake);
+        
+        updateTime();
+    }
+    
+    @Override
+    public void onDateSelect(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date(foodIntake.getTimeMillis()));
+        
+        Calendar newDateCalendar = Calendar.getInstance();
+        newDateCalendar.setTime(date);
+        
+        calendar.set(Calendar.YEAR, newDateCalendar.get(Calendar.YEAR));
+        calendar.set(Calendar.MONTH, newDateCalendar.get(Calendar.MONTH));
+        calendar.set(Calendar.DAY_OF_MONTH, newDateCalendar.get(Calendar.DAY_OF_MONTH));
+        
+        foodIntake.setTimeMillis(calendar.getTime().getTime());
+        saveFoodIntake(foodIntake);
+        
+        updateDate();
     }
 }

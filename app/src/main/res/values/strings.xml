@@ -44,5 +44,7 @@
     <string name="product_row_glycemic_idx_label_text">ГИ:</string>
     <string name="product_row_calc_btn_text">&#160;&#160;&#160;Расчитать и добавить</string>
     <string name="add_product_glycemic_idx_input_text">Гликемический индекс</string>
+    <string name="time_picker_title">Время:</string>
+    <string name="date_picker_title">Дата:</string>
 
 </resources>
