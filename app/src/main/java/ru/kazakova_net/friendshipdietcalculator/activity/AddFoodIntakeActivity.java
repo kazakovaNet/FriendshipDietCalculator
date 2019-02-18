@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,6 +25,8 @@ import ru.kazakova_net.friendshipdietcalculator.R;
 import ru.kazakova_net.friendshipdietcalculator.databinding.AddFoodIntakeActivityBinding;
 import ru.kazakova_net.friendshipdietcalculator.model.FoodIntake;
 import ru.kazakova_net.friendshipdietcalculator.model.FoodIntakeLab;
+import ru.kazakova_net.friendshipdietcalculator.model.FoodIntakeProduct;
+import ru.kazakova_net.friendshipdietcalculator.model.FoodIntakeProductLab;
 import ru.kazakova_net.friendshipdietcalculator.model.Product;
 import ru.kazakova_net.friendshipdietcalculator.model.ProductLab;
 import ru.kazakova_net.friendshipdietcalculator.util.CommonUtil;
@@ -42,6 +43,8 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
         setContentView(R.layout.activity_add_food_intake);
         
         foodIntake = new FoodIntake();
+        long foodIntakeId = FoodIntakeLab.get().add(foodIntake);
+        foodIntake.setId(foodIntakeId);
         foodIntake.setTimeMillis(System.currentTimeMillis());
         
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_food_intake);
@@ -78,7 +81,7 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.add_food_intake_save_btn:
-                FoodIntakeLab.get().addFoodIntake(foodIntake);
+                FoodIntakeLab.get().update(foodIntake);
                 break;
             case R.id.add_food_intake_add_product_row_btn:
                 addProductRow();
@@ -113,24 +116,34 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
         productCalcButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                displayCalculation(productRootView);
+                TextView productCountTextView = productRootView.findViewById(R.id.product_row_count);
+                if (productCountTextView.getText().toString().equals("")) {
+                    return;
+                }
+                double weightProduct = Double.parseDouble(productCountTextView.getText().toString());
+    
+                displayCalculation(productRootView, weightProduct);
+                saveFoodIntakeProduct(weightProduct);
             }
         });
     }
     
-    private void displayCalculation(View productRootView) {
-        TextView productCountTextView = productRootView.findViewById(R.id.product_row_count);
-        if (productCountTextView.getText().toString().equals("")) {
-            return;
-        }
-        
+    private void saveFoodIntakeProduct(double weightProduct) {
+        FoodIntakeProduct foodIntakeProduct = new FoodIntakeProduct();
+        foodIntakeProduct.setFoodIntakeId(foodIntake.getId());
+        foodIntakeProduct.setProductId(product.getId());
+        foodIntakeProduct.setWeight(weightProduct);
+    
+        FoodIntakeProductLab.get().addFoodIntakeProduct(foodIntakeProduct);
+    }
+    
+    private void displayCalculation(View productRootView, double weightProduct) {
         TextView proteinsTextView = productRootView.findViewById(R.id.product_row_proteins);
         TextView fatsTextView = productRootView.findViewById(R.id.product_row_fats);
         TextView carbohydratesTextView = productRootView.findViewById(R.id.product_row_carbohydrates);
         TextView caloriesTextView = productRootView.findViewById(R.id.product_row_calories);
         Spinner productCountUnitSpinner = productRootView.findViewById(R.id.product_row_count_unit);
         
-        double weightProduct = Double.parseDouble(productCountTextView.getText().toString());
         String productCountUnit = (String) productCountUnitSpinner.getSelectedItem();
         
         proteinsTextView.setText(calcElements(product.getProteins(), weightProduct, productCountUnit));

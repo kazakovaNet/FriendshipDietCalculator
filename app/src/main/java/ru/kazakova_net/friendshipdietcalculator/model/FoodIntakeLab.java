@@ -20,7 +20,12 @@ public class FoodIntakeLab {
     private FoodIntakeLab() {
     }
     
-    public void addFoodIntake(FoodIntake f) {
-        App.getAppDatabase().foodIntakeDao().insertAll(f);
+    public long add(FoodIntake f) {
+        long[] ids = App.getAppDatabase().foodIntakeDao().insertAll(f);
+        return ids[0];
+    }
+    
+    public void update(FoodIntake f){
+        App.getAppDatabase().foodIntakeDao().updateAll(f);
     }
 }

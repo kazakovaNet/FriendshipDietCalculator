@@ -10,34 +10,34 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity(tableName = "food_intake_product")
 public class FoodIntakeProduct {
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private long id;
     @ColumnInfo(name = "food_intake_id")
-    private int foodIntakeId;
+    private long foodIntakeId;
     @ColumnInfo(name = "product_id")
-    private int productId;
+    private long productId;
     private double weight;
     
-    public int getId() {
+    public long getId() {
         return id;
     }
     
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
     
-    public int getFoodIntakeId() {
+    public long getFoodIntakeId() {
         return foodIntakeId;
     }
     
-    public void setFoodIntakeId(int foodIntakeId) {
+    public void setFoodIntakeId(long foodIntakeId) {
         this.foodIntakeId = foodIntakeId;
     }
     
-    public int getProductId() {
+    public long getProductId() {
         return productId;
     }
     
-    public void setProductId(int productId) {
+    public void setProductId(long productId) {
         this.productId = productId;
     }
     

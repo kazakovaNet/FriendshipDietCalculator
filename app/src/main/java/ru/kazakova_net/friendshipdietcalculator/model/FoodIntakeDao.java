@@ -17,7 +17,7 @@ public interface FoodIntakeDao {
     List<FoodIntake> getAll();
     
     @Insert
-    void insertAll(FoodIntake... foodIntakes);
+    long[] insertAll(FoodIntake... foodIntakes);
     
     @Update
     void updateAll(FoodIntake... foodIntakes);

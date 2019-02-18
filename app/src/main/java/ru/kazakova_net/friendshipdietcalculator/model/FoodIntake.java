@@ -10,7 +10,7 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity(tableName = "food_intake")
 public class FoodIntake {
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private long id;
     private String type;
     @ColumnInfo(name = "time_millis")
     private long timeMillis;
@@ -18,11 +18,11 @@ public class FoodIntake {
     public FoodIntake() {
     }
     
-    public int getId() {
+    public long getId() {
         return id;
     }
     
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
     

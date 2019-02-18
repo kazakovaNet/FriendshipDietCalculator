@@ -11,7 +11,7 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity(tableName = "products")
 public class Product {
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private long id;
     private String title;
     private double proteins;
     private double fats;
@@ -81,11 +81,11 @@ public class Product {
         this.fromBS = fromBS;
     }
     
-    public int getId() {
+    public long getId() {
         return id;
     }
     
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
     
