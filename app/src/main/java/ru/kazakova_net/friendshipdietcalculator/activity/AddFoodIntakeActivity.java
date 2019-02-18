@@ -43,10 +43,7 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_food_intake);
         
-        foodIntake = new FoodIntake();
-        long foodIntakeId = saveFoodIntake(foodIntake);
-        foodIntake.setId(foodIntakeId);
-        foodIntake.setTimeMillis(System.currentTimeMillis());
+        initFoodIntake();
         
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_food_intake);
         binding.addFoodIntakeTypeSpinner.setOnItemSelectedListener(this);
@@ -63,10 +60,6 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
         updateTime();
     }
     
-    public static Intent getIntent(Context context) {
-        return new Intent(context, AddFoodIntakeActivity.class);
-    }
-    
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         switch (adapterView.getId()) {
@@ -79,19 +72,26 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
         }
     }
     
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+    
+    }
+    
+    private void initFoodIntake() {
+        foodIntake = new FoodIntake();
+        long foodIntakeId = saveFoodIntake(foodIntake);
+        foodIntake.setId(foodIntakeId);
+        foodIntake.setTimeMillis(System.currentTimeMillis());
+    }
+    
     private long saveFoodIntake(FoodIntake foodIntake) {
-        if (FoodIntakeLab.get().isSaved(foodIntake.getId())){
+        if (FoodIntakeLab.get().isSaved(foodIntake.getId())) {
             FoodIntakeLab.get().update(foodIntake);
             
             return foodIntake.getId();
         } else {
             return FoodIntakeLab.get().add(foodIntake);
         }
-    }
-    
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-    
     }
     
     private void addProductRow() {
@@ -120,7 +120,7 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
                 productCountTextView.requestFocus();
             }
         });
-    
+        
         Button productCalcButton = productRootView.findViewById(R.id.product_row_calc_btn);
         productCalcButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,7 +130,7 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
                     return;
                 }
                 double weightProduct = Double.parseDouble(productCountTextView.getText().toString());
-    
+                
                 displayCalculation(productRootView, weightProduct);
                 saveFoodIntakeProduct(weightProduct);
             }
@@ -143,7 +143,7 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
         foodIntakeProduct.setProductId(product.getId());
         foodIntakeProduct.setWeight(weightProduct);
         
-        if (FoodIntakeProductLab.get().isSaved(foodIntake.getId(), product.getId())){
+        if (FoodIntakeProductLab.get().isSaved(foodIntake.getId(), product.getId())) {
             FoodIntakeProductLab.get().update(foodIntakeProduct);
         } else {
             FoodIntakeProductLab.get().addFoodIntakeProduct(foodIntakeProduct);
@@ -199,5 +199,9 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
         
         binding.addFoodIntakeTimeBtn.setText(dateFormat.format(foodIntake.getTimeMillis()));
+    }
+    
+    public static Intent getIntent(Context context) {
+        return new Intent(context, AddFoodIntakeActivity.class);
     }
 }
