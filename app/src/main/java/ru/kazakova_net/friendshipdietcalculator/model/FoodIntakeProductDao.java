@@ -16,6 +16,9 @@ public interface FoodIntakeProductDao {
     @Query("SELECT * FROM food_intake_product")
     List<FoodIntakeProduct> getAll();
     
+    @Query("SELECT * FROM food_intake_product WHERE food_intake_id = :foodIntakeId AND product_id = :productId")
+    List<FoodIntakeProduct> getByProductId(long foodIntakeId, long productId);
+    
     @Insert
     void insertAll(FoodIntakeProduct... foodIntakeProducts);
     

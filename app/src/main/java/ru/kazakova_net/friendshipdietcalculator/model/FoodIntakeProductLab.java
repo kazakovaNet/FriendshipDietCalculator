@@ -23,4 +23,12 @@ public class FoodIntakeProductLab {
     public void addFoodIntakeProduct(FoodIntakeProduct f) {
         App.getAppDatabase().foodIntakeProductDao().insertAll(f);
     }
+    
+    public boolean isSaved(long foodIntakeId, long productId){
+        return App.getAppDatabase().foodIntakeProductDao().getByProductId(foodIntakeId, productId).size() > 0;
+    }
+    
+    public void update(FoodIntakeProduct foodIntakeProduct) {
+        App.getAppDatabase().foodIntakeProductDao().updateAll(foodIntakeProduct);
+    }
 }

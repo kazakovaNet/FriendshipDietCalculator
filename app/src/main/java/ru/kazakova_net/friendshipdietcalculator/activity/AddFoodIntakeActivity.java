@@ -133,8 +133,12 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
         foodIntakeProduct.setFoodIntakeId(foodIntake.getId());
         foodIntakeProduct.setProductId(product.getId());
         foodIntakeProduct.setWeight(weightProduct);
-    
-        FoodIntakeProductLab.get().addFoodIntakeProduct(foodIntakeProduct);
+        
+        if (FoodIntakeProductLab.get().isSaved(foodIntake.getId(), product.getId())){
+            FoodIntakeProductLab.get().update(foodIntakeProduct);
+        } else {
+            FoodIntakeProductLab.get().addFoodIntakeProduct(foodIntakeProduct);
+        }
     }
     
     private void displayCalculation(View productRootView, double weightProduct) {
