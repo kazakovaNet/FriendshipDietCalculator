@@ -105,6 +105,8 @@
             android:id="@+id/product_row_proteins"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:layout_weight="1"
             android:textColor="@color/colorAccent"
             android:textSize="18sp"
@@ -124,6 +126,8 @@
             android:id="@+id/product_row_fats"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:layout_weight="1"
             android:textColor="@color/colorAccent"
             android:textSize="18sp"
@@ -148,11 +152,29 @@
             android:textSize="18sp"
             tools:text="4.4" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
         <TextView
             android:id="@+id/product_row_calories_label"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:text="@string/product_row_calories_label_text"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp"
@@ -160,12 +182,12 @@
 
         <TextView
             android:id="@+id/product_row_calories"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:textColor="@color/colorAccent"
             android:textSize="18sp"
             tools:text="50" />
+
     </LinearLayout>
 
     <View
@@ -174,12 +196,12 @@
         android:layout_height="2dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:background="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 </android.support.constraint.ConstraintLayout>

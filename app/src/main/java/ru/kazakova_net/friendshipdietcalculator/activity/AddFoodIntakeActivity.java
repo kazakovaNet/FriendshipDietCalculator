@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -103,12 +104,17 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
         List<Product> allProducts = ProductLab.get().getAllProducts();
         ArrayAdapter<Product> productArrayAdapter = new ArrayAdapter<>(AddFoodIntakeActivity.this, android.R.layout.simple_list_item_1, allProducts);
         
-        AutoCompleteTextView productNameTextView = productRootView.findViewById(R.id.product_row_name);
+        final AutoCompleteTextView productNameTextView = productRootView.findViewById(R.id.product_row_name);
+        final EditText productCountTextView = productRootView.findViewById(R.id.product_row_count);
         productNameTextView.setAdapter(productArrayAdapter);
         productNameTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 product = (Product) adapterView.getItemAtPosition(i);
+                
+                CommonUtil.hideKeyboard(productNameTextView, (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE));
+                
+                productCountTextView.requestFocus();
             }
         });
     
