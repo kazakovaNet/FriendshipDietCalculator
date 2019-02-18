@@ -33,9 +33,7 @@ public class App extends Application {
     static final Migration MIGRATION_3_4 = new Migration(3, 4) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
-            database.execSQL("CREATE TABLE `food_intake_product` (`id` INTEGER PRIMARY KEY not null, "
-                    + "`food_intake_id` INTEGER not null, `product_id` INTEGER not null, "
-                    + "`weight` REAL not null)");
+            database.execSQL("ALTER TABLE `products` ADD `glycemic_idx` INTEGER NOT NULL DEFAULT 0");
         }
     };
     
@@ -46,7 +44,7 @@ public class App extends Application {
         appDatabase = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "fdc-db")
                 .allowMainThreadQueries()
-                .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
                 .build();
     }
     

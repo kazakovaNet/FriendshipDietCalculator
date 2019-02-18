@@ -4,6 +4,7 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.Nullable;
 
 /**
  * Created by nkazakova on 14/02/2019.
@@ -17,6 +18,8 @@ public class Product {
     private double fats;
     private double carbohydrates;
     private double calories;
+    @ColumnInfo(name = "glycemic_idx")
+    private int glycemicIndex;
     @ColumnInfo(name = "from_bs")
     private byte fromBS;
     
@@ -92,5 +95,13 @@ public class Product {
     @Override
     public String toString() {
         return title;
+    }
+    
+    public int getGlycemicIndex() {
+        return glycemicIndex;
+    }
+    
+    public void setGlycemicIndex(int glycemicIndex) {
+        this.glycemicIndex = glycemicIndex;
     }
 }

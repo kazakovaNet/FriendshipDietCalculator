@@ -71,6 +71,12 @@ public class AddProductActivity extends AppCompatActivity implements View.OnClic
         
             return false;
         }
+    
+        if (TextUtils.isEmpty(binding.addProductGlycemicIdxInput.getText().toString())){
+            binding.addProductGlycemicIdxInput.setError(getString(R.string.add_product_invalid_input_msg));
+        
+            return false;
+        }
         
         return true;
     }
@@ -87,6 +93,7 @@ public class AddProductActivity extends AppCompatActivity implements View.OnClic
         binding.addProductFatsInput.setText("");
         binding.addProductCarbohydratesInput.setText("");
         binding.addProductCaloriesInput.setText("");
+        binding.addProductGlycemicIdxInput.setText("");
         binding.addProductFromBsChk.setChecked(true);
     }
     
@@ -97,6 +104,7 @@ public class AddProductActivity extends AppCompatActivity implements View.OnClic
         product.setFats(Double.parseDouble(binding.addProductFatsInput.getText().toString()));
         product.setCarbohydrates(Double.parseDouble(binding.addProductCarbohydratesInput.getText().toString()));
         product.setCalories(Double.parseDouble(binding.addProductCaloriesInput.getText().toString()));
+        product.setGlycemicIndex(Integer.parseInt(binding.addProductGlycemicIdxInput.getText().toString()));
         product.setFromBS((byte) (binding.addProductFromBsChk.isChecked() ? 1 : 0));
         
         ProductLab.get().addProduct(product);

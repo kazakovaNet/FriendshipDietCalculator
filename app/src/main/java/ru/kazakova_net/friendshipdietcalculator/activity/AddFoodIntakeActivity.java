@@ -155,6 +155,7 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
         TextView fatsTextView = productRootView.findViewById(R.id.product_row_fats);
         TextView carbohydratesTextView = productRootView.findViewById(R.id.product_row_carbohydrates);
         TextView caloriesTextView = productRootView.findViewById(R.id.product_row_calories);
+        TextView glycemicIndexTextView = productRootView.findViewById(R.id.product_row_glycemic_idx);
         Spinner productCountUnitSpinner = productRootView.findViewById(R.id.product_row_count_unit);
         
         String productCountUnit = (String) productCountUnitSpinner.getSelectedItem();
@@ -163,6 +164,7 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
         fatsTextView.setText(calcElements(product.getFats(), weightProduct, productCountUnit));
         carbohydratesTextView.setText(calcElements(product.getCarbohydrates(), weightProduct, productCountUnit));
         caloriesTextView.setText(calcElements(product.getCalories(), weightProduct, productCountUnit));
+        glycemicIndexTextView.setText(String.valueOf(product.getGlycemicIndex()));
     }
     
     private String calcElements(double absAmountElement, double weightProduct, String productCountUnit) {
