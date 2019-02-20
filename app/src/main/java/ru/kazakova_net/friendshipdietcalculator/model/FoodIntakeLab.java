@@ -39,7 +39,7 @@ public class FoodIntakeLab {
         return App.getAppDatabase().foodIntakeDao().getAll();
     }
     
-    public List<FoodIntake> getByTimeRange(long timeMillisStart, long timeMillisEnd) {
-        return App.getAppDatabase().foodIntakeDao().getByDate(timeMillisStart, timeMillisEnd);
+    public List<FoodIntake> getByTimeRangeAndType(long timeMillisStart, long timeMillisEnd, List<String> typeCondition) {
+        return App.getAppDatabase().foodIntakeDao().getByDate(timeMillisStart, timeMillisEnd, typeCondition);
     }
 }

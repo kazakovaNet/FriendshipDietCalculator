@@ -31,6 +31,6 @@ public interface FoodIntakeDao {
     @Query("SELECT * FROM food_intake WHERE id = :foodIntakeId")
     FoodIntake getById(long foodIntakeId);
     
-    @Query("SELECT * FROM food_intake WHERE time_millis BETWEEN :timeMillisStart AND :timeMillisEnd")
-    List<FoodIntake> getByDate(long timeMillisStart, long timeMillisEnd);
+    @Query("SELECT * FROM food_intake WHERE (time_millis BETWEEN :timeMillisStart AND :timeMillisEnd) AND type IN (:typeCondition)")
+    List<FoodIntake> getByDate(long timeMillisStart, long timeMillisEnd, List<String> typeCondition);
 }

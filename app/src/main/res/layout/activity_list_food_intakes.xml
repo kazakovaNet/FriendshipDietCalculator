@@ -21,7 +21,7 @@
             android:layout_marginRight="8dp"
             android:text="@string/list_food_intakes_filter_label_text"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/list_food_intakes_reset_chk_btn"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,21 +32,107 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/list_food_intakes_filter_label"
             tools:text="15 февраля 2019 г" />
+
+        <LinearLayout
+            android:id="@+id/checkboxes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/list_food_intakes_date_btn">
+
+            <CheckBox
+                android:id="@+id/list_food_intakes_type_1_chk"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:onClick="onListFoodIntakesTypeChkClicked"
+                android:text="@string/type_intake_breakfast" />
+
+            <CheckBox
+                android:id="@+id/list_food_intakes_type_3_chk"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:onClick="onListFoodIntakesTypeChkClicked"
+                android:text="@string/type_intake_dinner" />
+
+            <CheckBox
+                android:id="@+id/list_food_intakes_type_5_chk"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:onClick="onListFoodIntakesTypeChkClicked"
+                android:text="@string/type_intake_supper" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/checkboxes2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkboxes">
+
+            <CheckBox
+                android:id="@+id/list_food_intakes_type_2_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:checked="true"
+                android:onClick="onListFoodIntakesTypeChkClicked"
+                android:text="@string/type_intake_lunch" />
+
+            <CheckBox
+                android:id="@+id/list_food_intakes_type_4_chk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:onClick="onListFoodIntakesTypeChkClicked"
+                android:text="@string/type_intake_afternoon_tea" />
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/list_food_intakes_reset_chk_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/list_food_intakes_reset_chk_btn_descr"
+            android:onClick="onListFoodIntakesResetChkBtnClicked"
+            android:src="@drawable/ic_reload"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/list_food_intakes_recycler_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/list_food_intakes_date_btn" />
+            app:layout_constraintTop_toBottomOf="@+id/checkboxes2" />
 
     </android.support.constraint.ConstraintLayout>
 </layout>

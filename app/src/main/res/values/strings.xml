@@ -49,5 +49,6 @@
     <string name="main_menu_list_food_intake_btn_text">Список всех приемов пищи</string>
     <string name="list_food_intakes_label">Сохраненные приемы пищи</string>
     <string name="list_food_intakes_filter_label_text">Фильтрация</string>
+    <string name="list_food_intakes_reset_chk_btn_descr">Reset button</string>
 
 </resources>
