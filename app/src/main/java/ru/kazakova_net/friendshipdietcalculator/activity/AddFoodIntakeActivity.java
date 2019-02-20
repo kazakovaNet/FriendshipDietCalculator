@@ -232,16 +232,7 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
     
     @Override
     public void onTimeSelect(Date time) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date(foodIntake.getTimeMillis()));
-        
-        Calendar newTimeCalendar = Calendar.getInstance();
-        newTimeCalendar.setTime(time);
-        
-        calendar.set(Calendar.HOUR_OF_DAY, newTimeCalendar.get(Calendar.HOUR_OF_DAY));
-        calendar.set(Calendar.MINUTE, newTimeCalendar.get(Calendar.MINUTE));
-        
-        foodIntake.setTimeMillis(calendar.getTime().getTime());
+        foodIntake.setTimeMillis(time.getTime());
         saveFoodIntake(foodIntake);
         
         updateTime();
@@ -249,17 +240,7 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
     
     @Override
     public void onDateSelect(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date(foodIntake.getTimeMillis()));
-        
-        Calendar newDateCalendar = Calendar.getInstance();
-        newDateCalendar.setTime(date);
-        
-        calendar.set(Calendar.YEAR, newDateCalendar.get(Calendar.YEAR));
-        calendar.set(Calendar.MONTH, newDateCalendar.get(Calendar.MONTH));
-        calendar.set(Calendar.DAY_OF_MONTH, newDateCalendar.get(Calendar.DAY_OF_MONTH));
-        
-        foodIntake.setTimeMillis(calendar.getTime().getTime());
+        foodIntake.setTimeMillis(date.getTime());
         saveFoodIntake(foodIntake);
         
         updateDate();

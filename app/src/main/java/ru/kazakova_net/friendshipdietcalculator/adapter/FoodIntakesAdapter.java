@@ -50,11 +50,16 @@ public class FoodIntakesAdapter extends RecyclerView.Adapter<FoodIntakesAdapter.
         return dateFormat.format(timeMillis);
     }
     
+    public void addItems(List<FoodIntake> newItems){
+        foodIntakes = newItems;
+        notifyDataSetChanged();
+    }
+    
     class ViewHolder extends RecyclerView.ViewHolder {
         
         private FoodIntakesListItemBinding binding;
         
-        public ViewHolder(FoodIntakesListItemBinding binding) {
+        ViewHolder(FoodIntakesListItemBinding binding) {
             super(binding.getRoot());
             
             this.binding = binding;

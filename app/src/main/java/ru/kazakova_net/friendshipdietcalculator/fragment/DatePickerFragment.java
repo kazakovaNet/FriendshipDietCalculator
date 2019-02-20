@@ -60,19 +60,35 @@ public class DatePickerFragment extends DialogFragment {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Date date = getDatePickerDate();
-
-                                dateSelectListener.onDateSelect(date);
+                                dateSelectListener.onDateSelect(getNewDate());
                             }
                         })
                 .create();
     }
-
+    
+    private Date getNewDate(){
+        return updateSourceDate();
+    }
+    
+    private Date updateSourceDate(){
+        Calendar sourceDateCalendar = Calendar.getInstance();
+        sourceDateCalendar.setTime((Date) getArguments().getSerializable(ARG_DATE));
+    
+        Calendar newDateCalendar = Calendar.getInstance();
+        newDateCalendar.setTime(getDatePickerDate());
+    
+        sourceDateCalendar.set(Calendar.YEAR, newDateCalendar.get(Calendar.YEAR));
+        sourceDateCalendar.set(Calendar.MONTH, newDateCalendar.get(Calendar.MONTH));
+        sourceDateCalendar.set(Calendar.DAY_OF_MONTH, newDateCalendar.get(Calendar.DAY_OF_MONTH));
+        
+        return sourceDateCalendar.getTime();
+    }
+    
     private Date getDatePickerDate() {
         int year = datePicker.getYear();
         int month = datePicker.getMonth();
         int day = datePicker.getDayOfMonth();
-
+        
         return new GregorianCalendar(year, month, day).getTime();
     }
 

@@ -7,7 +7,6 @@ import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by nkazakova on 15/02/2019.
@@ -31,4 +30,7 @@ public interface FoodIntakeDao {
     
     @Query("SELECT * FROM food_intake WHERE id = :foodIntakeId")
     FoodIntake getById(long foodIntakeId);
+    
+    @Query("SELECT * FROM food_intake WHERE time_millis BETWEEN :timeMillisStart AND :timeMillisEnd")
+    List<FoodIntake> getByDate(long timeMillisStart, long timeMillisEnd);
 }

@@ -27,15 +27,19 @@ public class FoodIntakeLab {
         return ids[0];
     }
     
-    public boolean isSaved(long foodIntakeId){
+    public boolean isSaved(long foodIntakeId) {
         return App.getAppDatabase().foodIntakeDao().getById(foodIntakeId) != null;
     }
     
-    public void update(FoodIntake f){
+    public void update(FoodIntake f) {
         App.getAppDatabase().foodIntakeDao().updateAll(f);
     }
     
     public List<FoodIntake> getAll() {
         return App.getAppDatabase().foodIntakeDao().getAll();
+    }
+    
+    public List<FoodIntake> getByTimeRange(long timeMillisStart, long timeMillisEnd) {
+        return App.getAppDatabase().foodIntakeDao().getByDate(timeMillisStart, timeMillisEnd);
     }
 }

@@ -48,5 +48,6 @@
     <string name="date_picker_title">Дата:</string>
     <string name="main_menu_list_food_intake_btn_text">Список всех приемов пищи</string>
     <string name="list_food_intakes_label">Сохраненные приемы пищи</string>
+    <string name="list_food_intakes_filter_label_text">Фильтрация</string>
 
 </resources>

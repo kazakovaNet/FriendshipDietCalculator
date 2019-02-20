@@ -68,16 +68,43 @@ public class TimePickerFragment extends DialogFragment {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                int hour = timePicker.getHour();
-                                int minute = timePicker.getMinute();
-                                GregorianCalendar gregorianCalendar = new GregorianCalendar();
-                                gregorianCalendar.set(GregorianCalendar.HOUR_OF_DAY, hour);
-                                gregorianCalendar.set(GregorianCalendar.MINUTE, minute);
-                                Date time = gregorianCalendar.getTime();
-                                timeSelectListener.onTimeSelect(time);
+                                
+                                
+                                timeSelectListener.onTimeSelect(getNewTime());
                             }
                         })
                 .create();
+    }
+    
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private Date getNewTime() {
+        return updateSourceTime();
+    }
+    
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private Date updateSourceTime() {
+        Calendar sourceDateCalendar = Calendar.getInstance();
+        sourceDateCalendar.setTime((Date) getArguments().getSerializable(ARG_TIME));
+    
+        Calendar newDateCalendar = Calendar.getInstance();
+        newDateCalendar.setTime(getTimePickerTime());
+    
+        sourceDateCalendar.set(Calendar.HOUR_OF_DAY, newDateCalendar.get(Calendar.HOUR_OF_DAY));
+        sourceDateCalendar.set(Calendar.MINUTE, newDateCalendar.get(Calendar.MINUTE));
+    
+        return sourceDateCalendar.getTime();
+    }
+    
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private Date getTimePickerTime() {
+        int hour = timePicker.getHour();
+        int minute = timePicker.getMinute();
+        
+        GregorianCalendar gregorianCalendar = new GregorianCalendar();
+        gregorianCalendar.set(GregorianCalendar.HOUR_OF_DAY, hour);
+        gregorianCalendar.set(GregorianCalendar.MINUTE, minute);
+        
+        return gregorianCalendar.getTime();
     }
     
     public interface TimeSelectListener{
