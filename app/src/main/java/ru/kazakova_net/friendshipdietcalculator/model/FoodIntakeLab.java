@@ -1,5 +1,7 @@
 package ru.kazakova_net.friendshipdietcalculator.model;
 
+import java.util.List;
+
 import ru.kazakova_net.friendshipdietcalculator.application.App;
 
 /**
@@ -31,5 +33,9 @@ public class FoodIntakeLab {
     
     public void update(FoodIntake f){
         App.getAppDatabase().foodIntakeDao().updateAll(f);
+    }
+    
+    public List<FoodIntake> getAll() {
+        return App.getAppDatabase().foodIntakeDao().getAll();
     }
 }

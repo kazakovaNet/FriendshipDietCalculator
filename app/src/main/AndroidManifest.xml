@@ -11,9 +11,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".activity.ListFoodIntakesActivity"
+            android:label="@string/list_food_intakes_label" />
+        <activity
             android:name=".activity.AddFoodIntakeActivity"
             android:label="@string/add_food_intake_activity_label"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".activity.ListProductsActivity" />
         <activity
             android:name=".activity.AddProductActivity"

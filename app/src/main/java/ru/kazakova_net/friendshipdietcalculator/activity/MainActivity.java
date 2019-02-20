@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         
         binding.mainMenuAddFoodIntakeBtn.setOnClickListener(this);
         binding.mainMenuAddProductBtn.setOnClickListener(this);
+        binding.mainMenuListFoodIntakeBtn.setOnClickListener(this);
     }
     
     @Override
@@ -34,6 +35,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.main_menu_add_food_intake_btn:
                 intent = AddFoodIntakeActivity.getIntent(MainActivity.this);
+                startActivity(intent);
+                break;
+            case R.id.main_menu_list_food_intake_btn:
+                intent = ListFoodIntakesActivity.getIntent(MainActivity.this);
                 startActivity(intent);
                 break;
         }

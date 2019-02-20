@@ -17,7 +17,7 @@
     <string name="add_product_from_bs_text">Взято из книги \"Будь стройной\"</string>
     <string name="add_product_success_msg">Продукт сохранён в базу данных</string>
     <string name="add_product_invalid_input_msg">Введите значение</string>
-    
+
     <string name="type_intake_breakfast">Завтрак</string>
     <string name="type_intake_lunch">Второй завтрак</string>
     <string name="type_intake_dinner">Обед</string>
@@ -46,5 +46,7 @@
     <string name="add_product_glycemic_idx_input_text">Гликемический индекс</string>
     <string name="time_picker_title">Время:</string>
     <string name="date_picker_title">Дата:</string>
+    <string name="main_menu_list_food_intake_btn_text">Список всех приемов пищи</string>
+    <string name="list_food_intakes_label">Сохраненные приемы пищи</string>
 
 </resources>

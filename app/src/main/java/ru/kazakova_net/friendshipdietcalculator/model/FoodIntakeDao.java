@@ -26,6 +26,9 @@ public interface FoodIntakeDao {
     @Delete
     void delete(FoodIntake foodIntake);
     
+    @Query("DELETE FROM food_intake")
+    void truncate();
+    
     @Query("SELECT * FROM food_intake WHERE id = :foodIntakeId")
     FoodIntake getById(long foodIntakeId);
 }
