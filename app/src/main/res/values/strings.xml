@@ -1,13 +1,13 @@
 <resources>
-    <string name="app_name">Friendship Diet Calculator</string>
+    <!--<string name="app_name">Friendship Diet Calculator</string>-->
+    <string name="app_name">Диета Дружбы</string>
 
     <string name="main_menu_add_food_intake_btn_text">Добавить прием пищи</string>
     <string name="main_menu_add_new_product_btn_text">Добавить продукт</string>
     <string name="main_menu_list_products_btn_text">Список сохраненных продуктов</string>
+    <string name="main_menu_list_food_intake_btn_text">Список всех приемов пищи</string>
 
     <string name="add_product_activity_label">Новый продукт</string>
-    <string name="add_food_intake_activity_label">Новый прием пищи</string>
-
     <string name="add_product_title_hint">Название</string>
     <string name="add_product_save_btn_text">Сохранить продукт</string>
     <string name="add_product_proteins_hint">Белки</string>
@@ -17,6 +17,7 @@
     <string name="add_product_from_bs_text">Взято из книги \"Будь стройной\"</string>
     <string name="add_product_success_msg">Продукт сохранён в базу данных</string>
     <string name="add_product_invalid_input_msg">Введите значение</string>
+    <string name="add_product_glycemic_idx_input_text">Гликемический индекс</string>
 
     <string name="type_intake_breakfast">Завтрак</string>
     <string name="type_intake_lunch">Второй завтрак</string>
@@ -26,27 +27,33 @@
 
     <string name="product_count_milligram">мг.</string>
     <string name="product_count_gram">гр.</string>
-    <string name="product_count_teaspoon">1 ч. л.</string>
-    <string name="product_count_table_spoon">1 ст. л.</string>
+    <string name="product_count_teaspoon">ч. л.</string>
+    <string name="product_count_table_spoon">ст. л.</string>
     <string name="product_count_pcs">шт.</string>
 
+    <string name="add_food_intake_activity_label">Новый прием пищи</string>
     <string name="add_food_intake_type_label_text">Прием пищи</string>
     <string name="add_food_intake_save_btn_text">Сохранить</string>
     <string name="add_food_intake_products_label_text">Продукты</string>
     <string name="add_food_intake_product_name_label_text">Продукт</string>
-    <string name="product_row_count_hint">Количество</string>
     <string name="add_food_intake_add_product_row_btn_text">Ещё…</string>
     <string name="add_food_intake_add_new_product_btn_text">Новый продукт</string>
+    <string name="add_food_intake_proteins_label_text">Б:</string>
+    <string name="add_food_intake_fats_label_text">Ж:</string>
+    <string name="add_food_intake_carbohydrates_label_text">У:</string>
+
+    <string name="product_row_count_hint">Количество</string>
     <string name="product_row_proteins_label_text">Б:</string>
     <string name="product_row_fats_label_text">Ж:</string>
     <string name="product_row_carbohydrates_label_text">У:</string>
     <string name="product_row_calories_label_text">Ккал:</string>
-    <string name="product_row_glycemic_idx_label_text">ГИ:</string>
-    <string name="product_row_calc_btn_text">&#160;&#160;&#160;Расчитать и добавить</string>
-    <string name="add_product_glycemic_idx_input_text">Гликемический индекс</string>
+    <string name="product_row_glycemic_idx_label_text">Гликемический индекс:</string>
+    <string name="product_row_calc_btn_text">&#160;&#160;&#160;Расчитать</string>
+    <string name="product_row_add_btn_text">&#160;&#160;&#160;Добавить</string>
+
     <string name="time_picker_title">Время:</string>
     <string name="date_picker_title">Дата:</string>
-    <string name="main_menu_list_food_intake_btn_text">Список всех приемов пищи</string>
+
     <string name="list_food_intakes_label">Сохраненные приемы пищи</string>
     <string name="list_food_intakes_filter_label_text">Фильтрация</string>
     <string name="list_food_intakes_reset_chk_btn_descr">Reset button</string>

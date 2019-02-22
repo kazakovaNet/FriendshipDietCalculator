@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,7 +21,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -138,9 +138,16 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 product = (Product) adapterView.getItemAtPosition(i);
                 
+                productCountTextView.requestFocus();
+            }
+        });
+        
+        productCountTextView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 CommonUtil.hideKeyboard(productNameTextView, (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE));
                 
-                productCountTextView.requestFocus();
+                return true;
             }
         });
         
@@ -148,13 +155,32 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
         productCalcButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AutoCompleteTextView productNameTextView = productRootView.findViewById(R.id.product_row_name);
                 TextView productCountTextView = productRootView.findViewById(R.id.product_row_count);
-                if (productCountTextView.getText().toString().equals("")) {
+    
+                if (productNameTextView.getText().toString().equals("") || productCountTextView.getText().toString().equals("")) {
                     return;
                 }
+                
                 double weightProduct = Double.parseDouble(productCountTextView.getText().toString());
                 
                 displayCalculation(productRootView, weightProduct);
+            }
+        });
+    
+        Button productAddButton = productRootView.findViewById(R.id.product_row_add_btn);
+        productAddButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AutoCompleteTextView productNameTextView = productRootView.findViewById(R.id.product_row_name);
+                TextView productCountTextView = productRootView.findViewById(R.id.product_row_count);
+                
+                if (productNameTextView.getText().toString().equals("") || productCountTextView.getText().toString().equals("")) {
+                    return;
+                }
+                
+                double weightProduct = Double.parseDouble(productCountTextView.getText().toString());
+            
                 saveFoodIntakeProduct(weightProduct);
             }
         });
@@ -177,17 +203,22 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
         TextView proteinsTextView = productRootView.findViewById(R.id.product_row_proteins);
         TextView fatsTextView = productRootView.findViewById(R.id.product_row_fats);
         TextView carbohydratesTextView = productRootView.findViewById(R.id.product_row_carbohydrates);
-        TextView caloriesTextView = productRootView.findViewById(R.id.product_row_calories);
         TextView glycemicIndexTextView = productRootView.findViewById(R.id.product_row_glycemic_idx);
         Spinner productCountUnitSpinner = productRootView.findViewById(R.id.product_row_count_unit);
+        LinearLayout linearLayout2 = productRootView.findViewById(R.id.add_food_intake_resume_wrapper);
+        LinearLayout linearLayout3 = productRootView.findViewById(R.id.linearLayout3);
         
         String productCountUnit = (String) productCountUnitSpinner.getSelectedItem();
+        
+        if (product.getGlycemicIndex() > 0) {
+            glycemicIndexTextView.setText(String.valueOf(product.getGlycemicIndex()));
+            linearLayout3.setVisibility(View.VISIBLE);
+        }
         
         proteinsTextView.setText(calcElements(product.getProteins(), weightProduct, productCountUnit));
         fatsTextView.setText(calcElements(product.getFats(), weightProduct, productCountUnit));
         carbohydratesTextView.setText(calcElements(product.getCarbohydrates(), weightProduct, productCountUnit));
-        caloriesTextView.setText(calcElements(product.getCalories(), weightProduct, productCountUnit));
-        glycemicIndexTextView.setText(String.valueOf(product.getGlycemicIndex()));
+        linearLayout2.setVisibility(View.VISIBLE);
     }
     
     private String calcElements(double absAmountElement, double weightProduct, String productCountUnit) {
@@ -196,14 +227,14 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
         } else if (productCountUnit.equals(getString(R.string.product_count_pcs))) {
             weightProduct = 1;
         } else if (productCountUnit.equals(getString(R.string.product_count_teaspoon))) {
-            weightProduct = 4;
+            weightProduct *= 4;
         } else if (productCountUnit.equals(getString(R.string.product_count_table_spoon))) {
-            weightProduct = 8;
+            weightProduct *= 8;
         }
         
         double result = weightProduct * absAmountElement / 100;
         
-        return String.valueOf(result);
+        return String.format(Locale.getDefault(), "%1$,.2f", result);
     }
     
     @Override
