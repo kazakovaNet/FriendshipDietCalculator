@@ -13,12 +13,24 @@ import android.view.inputmethod.InputMethodManager;
 import ru.kazakova_net.friendshipdietcalculator.R;
 import ru.kazakova_net.friendshipdietcalculator.adapter.AddFoodIntakeViewPagerAdapter;
 import ru.kazakova_net.friendshipdietcalculator.databinding.AddFoodIntakeActivityBinding;
+import ru.kazakova_net.friendshipdietcalculator.model.FoodIntake;
+import ru.kazakova_net.friendshipdietcalculator.model.FoodIntakeLab;
 import ru.kazakova_net.friendshipdietcalculator.util.CommonUtil;
 
 public class AddFoodIntakeActivity extends AppCompatActivity {
     
     public static Intent getIntent(Context context) {
         return new Intent(context, AddFoodIntakeActivity.class);
+    }
+    
+    public static long saveFoodIntake(FoodIntake foodIntake) {
+        if (FoodIntakeLab.get().isSaved(foodIntake.getId())) {
+            FoodIntakeLab.get().update(foodIntake);
+            
+            return foodIntake.getId();
+        } else {
+            return FoodIntakeLab.get().add(foodIntake);
+        }
     }
     
     @Override

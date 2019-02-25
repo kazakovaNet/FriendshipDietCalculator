@@ -14,6 +14,7 @@ public class FoodIntake {
     private String type;
     @ColumnInfo(name = "time_millis")
     private long timeMillis;
+    private String note;
     
     public FoodIntake() {
     }
@@ -40,5 +41,13 @@ public class FoodIntake {
     
     public void setTimeMillis(long timeMillis) {
         this.timeMillis = timeMillis;
+    }
+    
+    public String getNote() {
+        return note;
+    }
+    
+    public void setNote(String note) {
+        this.note = note;
     }
 }

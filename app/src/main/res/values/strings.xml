@@ -58,7 +58,9 @@
     <string name="list_food_intakes_filter_label_text">Фильтрация</string>
     <string name="list_food_intakes_reset_chk_btn_descr">Reset button</string>
     <string name="add_food_intake_menu_complete_title">Готово</string>
-    <string name="fragment_time_food_intake_title">Время и дата</string>
-    <string name="fragment_products_food_intake_title">Продукты</string>
+    <string name="time_food_intake_fragment_title">Время и дата</string>
+    <string name="products_food_intake_fragment_title">Продукты</string>
+    <string name="add_food_intake_note_field_hint">Заметка</string>
+    <string name="note_food_intake_fragment_title">Заметка</string>
 
 </resources>

@@ -7,15 +7,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import ru.kazakova_net.friendshipdietcalculator.R;
-import ru.kazakova_net.friendshipdietcalculator.fragment.FragmentProductsFoodIntake;
-import ru.kazakova_net.friendshipdietcalculator.fragment.FragmentTimeFoodIntake;
+import ru.kazakova_net.friendshipdietcalculator.fragment.NoteFoodIntakeFragment;
+import ru.kazakova_net.friendshipdietcalculator.fragment.ProductsFoodIntakeFragment;
+import ru.kazakova_net.friendshipdietcalculator.fragment.TimeFoodIntakeFragment;
 import ru.kazakova_net.friendshipdietcalculator.model.FoodIntake;
 
 /**
  * Created by nkazakova on 25/02/2019.
  */
 public class AddFoodIntakeViewPagerAdapter extends FragmentPagerAdapter {
-    private final static int MAX_TABS = 2;
+    private final static int MAX_TABS = 3;
     private Context context;
     private FoodIntake foodIntake;
     
@@ -30,9 +31,11 @@ public class AddFoodIntakeViewPagerAdapter extends FragmentPagerAdapter {
         initFoodIntake();
         
         if (position == 0) {
-            return FragmentTimeFoodIntake.newInstance(foodIntake.getId());
+            return TimeFoodIntakeFragment.newInstance(foodIntake.getId());
+        } else if (position == 1) {
+            return ProductsFoodIntakeFragment.newInstance(foodIntake.getId());
         } else {
-            return FragmentProductsFoodIntake.newInstance(foodIntake.getId());
+            return NoteFoodIntakeFragment.newInstance(foodIntake.getId());
         }
     }
     
@@ -45,16 +48,18 @@ public class AddFoodIntakeViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         if (position == 0) {
-            return context.getString(R.string.fragment_time_food_intake_title);
+            return context.getString(R.string.time_food_intake_fragment_title);
+        } else if (position == 1) {
+            return context.getString(R.string.products_food_intake_fragment_title);
         } else {
-            return context.getString(R.string.fragment_products_food_intake_title);
+            return context.getString(R.string.note_food_intake_fragment_title);
         }
     }
     
     private void initFoodIntake() {
         foodIntake = new FoodIntake();
         foodIntake.setTimeMillis(System.currentTimeMillis());
-        long foodIntakeId = FragmentTimeFoodIntake.saveFoodIntake(foodIntake);
+        long foodIntakeId = TimeFoodIntakeFragment.saveFoodIntake(foodIntake);
         foodIntake.setId(foodIntakeId);
     }
 }

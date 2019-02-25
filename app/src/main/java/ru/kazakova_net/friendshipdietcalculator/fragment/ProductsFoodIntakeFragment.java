@@ -36,7 +36,7 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
 /**
  * Created by nkazakova on 25/02/2019.
  */
-public class FragmentProductsFoodIntake extends Fragment {
+public class ProductsFoodIntakeFragment extends Fragment {
     
     private static final String ARG_FOOD_INTAKE_ID = "food_intake_id";
     
@@ -48,10 +48,10 @@ public class FragmentProductsFoodIntake extends Fragment {
     private double sumFats;
     private double sumCarbohydrates;
     
-    public static FragmentProductsFoodIntake newInstance(long foodIntakeId) {
+    public static ProductsFoodIntakeFragment newInstance(long foodIntakeId) {
         Bundle args = new Bundle();
         args.putLong(ARG_FOOD_INTAKE_ID, foodIntakeId);
-        FragmentProductsFoodIntake fragment = new FragmentProductsFoodIntake();
+        ProductsFoodIntakeFragment fragment = new ProductsFoodIntakeFragment();
         fragment.setArguments(args);
         
         return fragment;

@@ -25,7 +25,7 @@ import ru.kazakova_net.friendshipdietcalculator.model.FoodIntakeLab;
 /**
  * Created by nkazakova on 25/02/2019.
  */
-public class FragmentTimeFoodIntake extends Fragment {
+public class TimeFoodIntakeFragment extends Fragment {
     
     private static final String ARG_FOOD_INTAKE_ID = "food_intake_id";
     
@@ -37,16 +37,26 @@ public class FragmentTimeFoodIntake extends Fragment {
     private TimeFoodIntakeFragmentBinding binding;
     private FoodIntake foodIntake;
     
-    public FragmentTimeFoodIntake() {
+    public TimeFoodIntakeFragment() {
     }
     
-    public static FragmentTimeFoodIntake newInstance(long foodIntakeId) {
+    public static TimeFoodIntakeFragment newInstance(long foodIntakeId) {
         Bundle args = new Bundle();
         args.putLong(ARG_FOOD_INTAKE_ID, foodIntakeId);
-        FragmentTimeFoodIntake fragment = new FragmentTimeFoodIntake();
+        TimeFoodIntakeFragment fragment = new TimeFoodIntakeFragment();
         fragment.setArguments(args);
         
         return fragment;
+    }
+    
+    public static long saveFoodIntake(FoodIntake foodIntake) {
+        if (FoodIntakeLab.get().isSaved(foodIntake.getId())) {
+            FoodIntakeLab.get().update(foodIntake);
+            
+            return foodIntake.getId();
+        } else {
+            return FoodIntakeLab.get().add(foodIntake);
+        }
     }
     
     @Nullable
@@ -90,7 +100,7 @@ public class FragmentTimeFoodIntake extends Fragment {
             public void onClick(View view) {
                 FragmentManager manager = getActivity().getSupportFragmentManager();
                 DatePickerFragment dialog = DatePickerFragment.newInstance(new Date(foodIntake.getTimeMillis()));
-                dialog.setTargetFragment(FragmentTimeFoodIntake.this, REQUEST_DATE);
+                dialog.setTargetFragment(TimeFoodIntakeFragment.this, REQUEST_DATE);
                 dialog.show(manager, DIALOG_DATE);
             }
         });
@@ -99,7 +109,7 @@ public class FragmentTimeFoodIntake extends Fragment {
             public void onClick(View view) {
                 FragmentManager manager = getActivity().getSupportFragmentManager();
                 TimePickerFragment dialog = TimePickerFragment.newInstance(new Date(foodIntake.getTimeMillis()));
-                dialog.setTargetFragment(FragmentTimeFoodIntake.this, REQUEST_TIME);
+                dialog.setTargetFragment(TimeFoodIntakeFragment.this, REQUEST_TIME);
                 dialog.show(manager, DIALOG_TIME);
             }
         });
@@ -109,16 +119,6 @@ public class FragmentTimeFoodIntake extends Fragment {
         updateTime();
         
         return binding.getRoot();
-    }
-    
-    public static long saveFoodIntake(FoodIntake foodIntake) {
-        if (FoodIntakeLab.get().isSaved(foodIntake.getId())) {
-            FoodIntakeLab.get().update(foodIntake);
-            
-            return foodIntake.getId();
-        } else {
-            return FoodIntakeLab.get().add(foodIntake);
-        }
     }
     
     private void updateDate() {

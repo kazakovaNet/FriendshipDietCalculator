@@ -184,6 +184,7 @@
         android:drawableLeft="@drawable/ic_calculator"
         android:scaleType="center"
         android:text="@string/product_row_calc_btn_text"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
@@ -199,6 +200,7 @@
         android:drawableLeft="@drawable/ic_tick"
         android:scaleType="center"
         android:text="@string/product_row_add_btn_text"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
