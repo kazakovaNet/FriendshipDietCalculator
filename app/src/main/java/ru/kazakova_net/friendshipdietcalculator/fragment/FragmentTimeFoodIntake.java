@@ -27,6 +27,8 @@ import ru.kazakova_net.friendshipdietcalculator.model.FoodIntakeLab;
  */
 public class FragmentTimeFoodIntake extends Fragment {
     
+    private static final String ARG_FOOD_INTAKE_ID = "food_intake_id";
+    
     private static final String DIALOG_TIME = "DialogTime";
     private static final String DIALOG_DATE = "DialogDate";
     private static final int REQUEST_DATE = 0;
@@ -38,8 +40,13 @@ public class FragmentTimeFoodIntake extends Fragment {
     public FragmentTimeFoodIntake() {
     }
     
-    public static FragmentTimeFoodIntake newInstance() {
-        return new FragmentTimeFoodIntake();
+    public static FragmentTimeFoodIntake newInstance(long foodIntakeId) {
+        Bundle args = new Bundle();
+        args.putLong(ARG_FOOD_INTAKE_ID, foodIntakeId);
+        FragmentTimeFoodIntake fragment = new FragmentTimeFoodIntake();
+        fragment.setArguments(args);
+    
+        return fragment;
     }
     
     @Nullable
@@ -47,8 +54,8 @@ public class FragmentTimeFoodIntake extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_time_food_intake, container, false);
         
-        initFoodIntake();
-        
+        foodIntake = FoodIntakeLab.get().getById(getArguments().getLong(ARG_FOOD_INTAKE_ID));
+    
         binding.addFoodIntakeTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -89,15 +96,7 @@ public class FragmentTimeFoodIntake extends Fragment {
         return binding.getRoot();
     }
     
-    private void initFoodIntake() {
-        foodIntake = new FoodIntake();
-        long foodIntakeId = saveFoodIntake(foodIntake);
-        foodIntake.setId(foodIntakeId);
-        foodIntake.setTimeMillis(System.currentTimeMillis());
-    }
-    
-    // FIXME: 25/02/2019
-    private long saveFoodIntake(FoodIntake foodIntake) {
+    public static long saveFoodIntake(FoodIntake foodIntake) {
         if (FoodIntakeLab.get().isSaved(foodIntake.getId())) {
             FoodIntakeLab.get().update(foodIntake);
             

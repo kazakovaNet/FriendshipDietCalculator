@@ -46,4 +46,8 @@ public class FoodIntakeLab {
     public void truncate() {
         App.getAppDatabase().foodIntakeDao().truncate();
     }
+    
+    public FoodIntake getById(long foodIntakeId) {
+        return App.getAppDatabase().foodIntakeDao().getById(foodIntakeId);
+    }
 }
