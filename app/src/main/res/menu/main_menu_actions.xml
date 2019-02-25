@@ -4,10 +4,10 @@
     <item
         android:id="@+id/reload_products"
         android:title="Обновить продукты"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/truncate_food_intakes"
         android:title="Очистить приемы пищи"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
 </menu>

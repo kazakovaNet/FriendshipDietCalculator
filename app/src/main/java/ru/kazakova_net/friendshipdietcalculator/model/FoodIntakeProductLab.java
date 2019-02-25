@@ -13,15 +13,15 @@ public class FoodIntakeProductLab {
     
     private static FoodIntakeProductLab foodIntakeProductLab;
     
+    private FoodIntakeProductLab() {
+    }
+    
     public static FoodIntakeProductLab get() {
         if (foodIntakeProductLab == null) {
             foodIntakeProductLab = new FoodIntakeProductLab();
         }
         
         return foodIntakeProductLab;
-    }
-    
-    private FoodIntakeProductLab() {
     }
     
     public void addFoodIntakeProduct(FoodIntakeProduct f) {

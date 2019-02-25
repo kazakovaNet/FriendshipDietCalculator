@@ -23,7 +23,7 @@ import ru.kazakova_net.friendshipdietcalculator.databinding.ListFoodIntakesActiv
 import ru.kazakova_net.friendshipdietcalculator.fragment.DatePickerFragment;
 import ru.kazakova_net.friendshipdietcalculator.model.FoodIntakeLab;
 
-public class ListFoodIntakesActivity extends AppCompatActivity implements DatePickerFragment.DateSelectListener {
+public class ListFoodIntakesActivity extends AppCompatActivity {
     
     private static final String DIALOG_DATE = "DialogDate";
     
@@ -61,7 +61,6 @@ public class ListFoodIntakesActivity extends AppCompatActivity implements DatePi
         filterList();
     }
     
-    @Override
     public void onDateSelect(Date date) {
         filterDate = date;
         
@@ -94,19 +93,19 @@ public class ListFoodIntakesActivity extends AppCompatActivity implements DatePi
         if (binding.listFoodIntakesType1Chk.isChecked()) {
             typeConditions.add(getString(R.string.type_intake_breakfast));
         }
-    
+        
         if (binding.listFoodIntakesType2Chk.isChecked()) {
             typeConditions.add(getString(R.string.type_intake_lunch));
         }
-    
+        
         if (binding.listFoodIntakesType3Chk.isChecked()) {
             typeConditions.add(getString(R.string.type_intake_dinner));
         }
-    
+        
         if (binding.listFoodIntakesType4Chk.isChecked()) {
             typeConditions.add(getString(R.string.type_intake_afternoon_tea));
         }
-    
+        
         if (binding.listFoodIntakesType5Chk.isChecked()) {
             typeConditions.add(getString(R.string.type_intake_supper));
         }

@@ -1,7 +1,7 @@
 package ru.kazakova_net.friendshipdietcalculator.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import ru.kazakova_net.friendshipdietcalculator.R;
 

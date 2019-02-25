@@ -1,8 +1,10 @@
 package ru.kazakova_net.friendshipdietcalculator.fragment;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -22,10 +24,9 @@ import ru.kazakova_net.friendshipdietcalculator.R;
  */
 public class TimePickerFragment extends DialogFragment {
     
+    public static final String EXTRA_TIME = "ru.kazakova_net.friendshipdietcalculator.time";
     private static final String ARG_TIME = "time";
-    
     private TimePicker timePicker;
-    private TimeSelectListener timeSelectListener;
     
     public static TimePickerFragment newInstance(Date time) {
         Bundle args = new Bundle();
@@ -40,12 +41,6 @@ public class TimePickerFragment extends DialogFragment {
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        try{
-            timeSelectListener = (TimeSelectListener) getActivity();
-        } catch (ClassCastException e){
-            throw new ClassCastException(getActivity().getClass().getSimpleName() + " must implement " + TimeSelectListener.class.getSimpleName());
-        }
-        
         final Date time = (Date) getArguments().getSerializable(ARG_TIME);
         
         Calendar calendar = Calendar.getInstance();
@@ -68,12 +63,22 @@ public class TimePickerFragment extends DialogFragment {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                
-                                
-                                timeSelectListener.onTimeSelect(getNewTime());
+                                sendResult(Activity.RESULT_OK, getNewTime());
                             }
                         })
                 .create();
+    }
+    
+    private void sendResult(int resultCode, Date time) {
+        if (getTargetFragment() == null) {
+            return;
+        }
+        
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_TIME, time);
+        
+        getTargetFragment()
+                .onActivityResult(getTargetRequestCode(), resultCode, intent);
     }
     
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -85,13 +90,13 @@ public class TimePickerFragment extends DialogFragment {
     private Date updateSourceTime() {
         Calendar sourceDateCalendar = Calendar.getInstance();
         sourceDateCalendar.setTime((Date) getArguments().getSerializable(ARG_TIME));
-    
+        
         Calendar newDateCalendar = Calendar.getInstance();
         newDateCalendar.setTime(getTimePickerTime());
-    
+        
         sourceDateCalendar.set(Calendar.HOUR_OF_DAY, newDateCalendar.get(Calendar.HOUR_OF_DAY));
         sourceDateCalendar.set(Calendar.MINUTE, newDateCalendar.get(Calendar.MINUTE));
-    
+        
         return sourceDateCalendar.getTime();
     }
     
@@ -105,9 +110,5 @@ public class TimePickerFragment extends DialogFragment {
         gregorianCalendar.set(GregorianCalendar.MINUTE, minute);
         
         return gregorianCalendar.getTime();
-    }
-    
-    public interface TimeSelectListener{
-        void onTimeSelect(Date time);
     }
 }

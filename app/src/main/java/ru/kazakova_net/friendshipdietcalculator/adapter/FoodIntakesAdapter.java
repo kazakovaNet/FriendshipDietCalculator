@@ -1,13 +1,11 @@
 package ru.kazakova_net.friendshipdietcalculator.adapter;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -23,6 +21,12 @@ public class FoodIntakesAdapter extends RecyclerView.Adapter<FoodIntakesAdapter.
     
     public FoodIntakesAdapter(List<FoodIntake> foodIntakes) {
         this.foodIntakes = foodIntakes;
+    }
+    
+    public static String formatDate(long timeMillis) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault());
+        
+        return dateFormat.format(timeMillis);
     }
     
     @NonNull
@@ -44,13 +48,7 @@ public class FoodIntakesAdapter extends RecyclerView.Adapter<FoodIntakesAdapter.
         return foodIntakes.size();
     }
     
-    public static String formatDate(long timeMillis){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault());
-    
-        return dateFormat.format(timeMillis);
-    }
-    
-    public void addItems(List<FoodIntake> newItems){
+    public void addItems(List<FoodIntake> newItems) {
         foodIntakes = newItems;
         notifyDataSetChanged();
     }

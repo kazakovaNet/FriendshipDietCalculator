@@ -11,15 +11,15 @@ public class ProductLab {
     
     private static ProductLab productLab;
     
+    private ProductLab() {
+    }
+    
     public static ProductLab get() {
         if (productLab == null) {
             productLab = new ProductLab();
         }
         
         return productLab;
-    }
-    
-    private ProductLab() {
     }
     
     public void addProduct(Product p) {

@@ -11,15 +11,15 @@ public class FoodIntakeLab {
     
     private static FoodIntakeLab foodIntakeLab;
     
+    private FoodIntakeLab() {
+    }
+    
     public static FoodIntakeLab get() {
         if (foodIntakeLab == null) {
             foodIntakeLab = new FoodIntakeLab();
         }
         
         return foodIntakeLab;
-    }
-    
-    private FoodIntakeLab() {
     }
     
     public long add(FoodIntake f) {
@@ -43,7 +43,7 @@ public class FoodIntakeLab {
         return App.getAppDatabase().foodIntakeDao().getByDate(timeMillisStart, timeMillisEnd, typeCondition);
     }
     
-    public void truncate(){
+    public void truncate() {
         App.getAppDatabase().foodIntakeDao().truncate();
     }
 }

@@ -11,8 +11,6 @@ import ru.kazakova_net.friendshipdietcalculator.model.AppDatabase;
  * Created by nkazakova on 14/02/2019.
  */
 public class App extends Application {
-    private static AppDatabase appDatabase;
-    
     static final Migration MIGRATION_1_2 = new Migration(1, 2) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
@@ -20,7 +18,6 @@ public class App extends Application {
                     + "`type` TEXT, `time_millis` INTEGER not null)");
         }
     };
-    
     static final Migration MIGRATION_2_3 = new Migration(2, 3) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
@@ -29,13 +26,17 @@ public class App extends Application {
                     + "`weight` REAL not null)");
         }
     };
-    
     static final Migration MIGRATION_3_4 = new Migration(3, 4) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             database.execSQL("ALTER TABLE `products` ADD `glycemic_idx` INTEGER NOT NULL DEFAULT 0");
         }
     };
+    private static AppDatabase appDatabase;
+    
+    public static AppDatabase getAppDatabase() {
+        return appDatabase;
+    }
     
     @Override
     public void onCreate() {
@@ -46,9 +47,5 @@ public class App extends Application {
                 .allowMainThreadQueries()
                 .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
                 .build();
-    }
-    
-    public static AppDatabase getAppDatabase() {
-        return appDatabase;
     }
 }

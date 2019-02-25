@@ -18,6 +18,10 @@ public class AddProductActivity extends AppCompatActivity implements View.OnClic
     
     private AddProductActivityBinding binding;
     
+    public static Intent getIntent(Context context) {
+        return new Intent(context, AddProductActivity.class);
+    }
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,53 +32,49 @@ public class AddProductActivity extends AppCompatActivity implements View.OnClic
         binding.addProductSaveBtn.setOnClickListener(this);
     }
     
-    public static Intent getIntent(Context context) {
-        return new Intent(context, AddProductActivity.class);
-    }
-    
     @Override
     public void onClick(View view) {
-        if (validateInput()){
+        if (validateInput()) {
             saveProduct();
-    
+            
             completeSaving(view);
         }
     }
     
     private boolean validateInput() {
-        if (TextUtils.isEmpty(binding.addProductTitleInput.getText().toString())){
+        if (TextUtils.isEmpty(binding.addProductTitleInput.getText().toString())) {
             binding.addProductTitleInput.setError(getString(R.string.add_product_invalid_input_msg));
             
             return false;
         }
-    
-        if (TextUtils.isEmpty(binding.addProductProteinsInput.getText().toString())){
+        
+        if (TextUtils.isEmpty(binding.addProductProteinsInput.getText().toString())) {
             binding.addProductProteinsInput.setError(getString(R.string.add_product_invalid_input_msg));
-        
+            
             return false;
         }
-    
-        if (TextUtils.isEmpty(binding.addProductFatsInput.getText().toString())){
+        
+        if (TextUtils.isEmpty(binding.addProductFatsInput.getText().toString())) {
             binding.addProductFatsInput.setError(getString(R.string.add_product_invalid_input_msg));
-        
+            
             return false;
         }
-    
-        if (TextUtils.isEmpty(binding.addProductCarbohydratesInput.getText().toString())){
+        
+        if (TextUtils.isEmpty(binding.addProductCarbohydratesInput.getText().toString())) {
             binding.addProductCarbohydratesInput.setError(getString(R.string.add_product_invalid_input_msg));
-        
+            
             return false;
         }
-    
-        if (TextUtils.isEmpty(binding.addProductCaloriesInput.getText().toString())){
+        
+        if (TextUtils.isEmpty(binding.addProductCaloriesInput.getText().toString())) {
             binding.addProductCaloriesInput.setError(getString(R.string.add_product_invalid_input_msg));
-        
+            
             return false;
         }
-    
-        if (TextUtils.isEmpty(binding.addProductGlycemicIdxInput.getText().toString())){
-            binding.addProductGlycemicIdxInput.setError(getString(R.string.add_product_invalid_input_msg));
         
+        if (TextUtils.isEmpty(binding.addProductGlycemicIdxInput.getText().toString())) {
+            binding.addProductGlycemicIdxInput.setError(getString(R.string.add_product_invalid_input_msg));
+            
             return false;
         }
         
@@ -83,7 +83,7 @@ public class AddProductActivity extends AppCompatActivity implements View.OnClic
     
     private void completeSaving(View view) {
         Snackbar.make(view, R.string.add_product_success_msg, Snackbar.LENGTH_SHORT).show();
-    
+        
         resetInputs();
     }
     
