@@ -10,6 +10,8 @@ import android.view.View;
 
 import ru.kazakova_net.friendshipdietcalculator.R;
 import ru.kazakova_net.friendshipdietcalculator.databinding.MainActivityBinding;
+import ru.kazakova_net.friendshipdietcalculator.model.FoodIntakeLab;
+import ru.kazakova_net.friendshipdietcalculator.model.FoodIntakeProductLab;
 import ru.kazakova_net.friendshipdietcalculator.model.ProductLab;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -59,6 +61,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (item.getItemId()) {
             case R.id.reload_products:
                 ProductLab.get().addDummyProducts();
+                break;
+            case R.id.truncate_food_intakes:
+                FoodIntakeLab.get().truncate();
+                FoodIntakeProductLab.get().truncate();
                 break;
         }
         

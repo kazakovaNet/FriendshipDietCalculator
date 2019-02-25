@@ -42,4 +42,8 @@ public class FoodIntakeLab {
     public List<FoodIntake> getByTimeRangeAndType(long timeMillisStart, long timeMillisEnd, List<String> typeCondition) {
         return App.getAppDatabase().foodIntakeDao().getByDate(timeMillisStart, timeMillisEnd, typeCondition);
     }
+    
+    public void truncate(){
+        App.getAppDatabase().foodIntakeDao().truncate();
+    }
 }

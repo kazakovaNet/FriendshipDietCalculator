@@ -17,7 +17,10 @@ public interface FoodIntakeProductDao {
     List<FoodIntakeProduct> getAll();
     
     @Query("SELECT * FROM food_intake_product WHERE food_intake_id = :foodIntakeId AND product_id = :productId")
-    List<FoodIntakeProduct> getByProductId(long foodIntakeId, long productId);
+    List<FoodIntakeProduct> getByFoodIntakeIdAndProductId(long foodIntakeId, long productId);
+    
+    @Query("SELECT * FROM food_intake_product WHERE food_intake_id = :foodIntakeId")
+    List<FoodIntakeProduct> getByFoodIntakeId(long foodIntakeId);
     
     @Insert
     void insertAll(FoodIntakeProduct... foodIntakeProducts);
@@ -27,4 +30,7 @@ public interface FoodIntakeProductDao {
     
     @Delete
     void delete(FoodIntakeProduct foodIntakeProduct);
+    
+    @Query("DELETE FROM food_intake_product")
+    void truncate();
 }

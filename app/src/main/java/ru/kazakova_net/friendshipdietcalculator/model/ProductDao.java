@@ -16,6 +16,9 @@ public interface ProductDao {
     @Query("SELECT * FROM products ORDER BY title")
     List<Product> getAll();
     
+    @Query("SELECT * FROM products WHERE id = :productId")
+    Product getById(long productId);
+    
     @Insert
     void insertAll(Product... products);
     

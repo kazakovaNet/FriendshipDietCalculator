@@ -49,7 +49,7 @@
     <string name="product_row_calories_label_text">Ккал:</string>
     <string name="product_row_glycemic_idx_label_text">Гликемический индекс:</string>
     <string name="product_row_calc_btn_text">&#160;&#160;&#160;Расчитать</string>
-    <string name="product_row_add_btn_text">&#160;&#160;&#160;Добавить</string>
+    <string name="product_row_add_btn_text">&#160;&#160;&#160;Сохранить</string>
 
     <string name="time_picker_title">Время:</string>
     <string name="date_picker_title">Дата:</string>
@@ -57,5 +57,6 @@
     <string name="list_food_intakes_label">Сохраненные приемы пищи</string>
     <string name="list_food_intakes_filter_label_text">Фильтрация</string>
     <string name="list_food_intakes_reset_chk_btn_descr">Reset button</string>
+    <string name="add_food_intake_menu_complete_title">Готово</string>
 
 </resources>

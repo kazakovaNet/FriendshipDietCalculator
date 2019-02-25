@@ -8,6 +8,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -24,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import ru.kazakova_net.friendshipdietcalculator.R;
 import ru.kazakova_net.friendshipdietcalculator.databinding.AddFoodIntakeActivityBinding;
@@ -37,13 +40,17 @@ import ru.kazakova_net.friendshipdietcalculator.model.Product;
 import ru.kazakova_net.friendshipdietcalculator.model.ProductLab;
 import ru.kazakova_net.friendshipdietcalculator.util.CommonUtil;
 
-public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, TimePickerFragment.TimeSelectListener, DatePickerFragment.DateSelectListener {
+public class AddFoodIntakeActivity extends AppCompatActivity implements TimePickerFragment.TimeSelectListener, DatePickerFragment.DateSelectListener {
     
     private static final String DIALOG_TIME = "DialogTime";
     private static final String DIALOG_DATE = "DialogDate";
     private AddFoodIntakeActivityBinding binding;
     private FoodIntake foodIntake;
-    private Product product;
+    private Product newProduct;
+    
+    private double sumProteins;
+    private double sumFats;
+    private double sumCarbohydrates;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +60,20 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
         initFoodIntake();
         
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_food_intake);
-        binding.addFoodIntakeTypeSpinner.setOnItemSelectedListener(this);
+        binding.addFoodIntakeTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String foodIntakeType = (String) adapterView.getItemAtPosition(i);
+                foodIntake.setType(foodIntakeType);
+                
+                saveFoodIntake(foodIntake);
+            }
+            
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            
+            }
+        });
         binding.addFoodIntakeDateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,24 +100,8 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
         addProductRow();
         
         updateDate();
+        
         updateTime();
-    }
-    
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        switch (adapterView.getId()) {
-            case R.id.add_food_intake_type_spinner:
-                String foodIntakeType = (String) adapterView.getItemAtPosition(i);
-                foodIntake.setType(foodIntakeType);
-                
-                saveFoodIntake(foodIntake);
-                break;
-        }
-    }
-    
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-    
     }
     
     private void initFoodIntake() {
@@ -107,6 +111,7 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
         foodIntake.setTimeMillis(System.currentTimeMillis());
     }
     
+    // FIXME: 25/02/2019
     private long saveFoodIntake(FoodIntake foodIntake) {
         if (FoodIntakeLab.get().isSaved(foodIntake.getId())) {
             FoodIntakeLab.get().update(foodIntake);
@@ -136,11 +141,12 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
         productNameTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                product = (Product) adapterView.getItemAtPosition(i);
+                newProduct = (Product) adapterView.getItemAtPosition(i);
                 
                 productCountTextView.requestFocus();
             }
         });
+        productNameTextView.requestFocus();
         
         productCountTextView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -151,24 +157,27 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
             }
         });
         
-        Button productCalcButton = productRootView.findViewById(R.id.product_row_calc_btn);
+        final Button productCalcButton = productRootView.findViewById(R.id.product_row_calc_btn);
         productCalcButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AutoCompleteTextView productNameTextView = productRootView.findViewById(R.id.product_row_name);
                 TextView productCountTextView = productRootView.findViewById(R.id.product_row_count);
-    
+                
                 if (productNameTextView.getText().toString().equals("") || productCountTextView.getText().toString().equals("")) {
                     return;
                 }
                 
+                Spinner productCountUnitSpinner = productRootView.findViewById(R.id.product_row_count_unit);
+                String productCountUnit = (String) productCountUnitSpinner.getSelectedItem();
+                
                 double weightProduct = Double.parseDouble(productCountTextView.getText().toString());
                 
-                displayCalculation(productRootView, weightProduct);
+                displayCalculation(productRootView, getWeightProduct(weightProduct, productCountUnit));
             }
         });
-    
-        Button productAddButton = productRootView.findViewById(R.id.product_row_add_btn);
+        
+        final Button productAddButton = productRootView.findViewById(R.id.product_row_add_btn);
         productAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -179,9 +188,20 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
                     return;
                 }
                 
+                Spinner productCountUnitSpinner = productRootView.findViewById(R.id.product_row_count_unit);
+                String productCountUnit = (String) productCountUnitSpinner.getSelectedItem();
+                
                 double weightProduct = Double.parseDouble(productCountTextView.getText().toString());
-            
-                saveFoodIntakeProduct(weightProduct);
+                
+                saveFoodIntakeProduct(getWeightProduct(weightProduct, productCountUnit));
+                
+                productAddButton.setVisibility(View.GONE);
+                productCalcButton.setVisibility(View.GONE);
+                productNameTextView.setEnabled(false);
+                productCountTextView.setEnabled(false);
+                productCountUnitSpinner.setEnabled(false);
+                
+                addProductRow();
             }
         });
     }
@@ -189,39 +209,69 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
     private void saveFoodIntakeProduct(double weightProduct) {
         FoodIntakeProduct foodIntakeProduct = new FoodIntakeProduct();
         foodIntakeProduct.setFoodIntakeId(foodIntake.getId());
-        foodIntakeProduct.setProductId(product.getId());
+        foodIntakeProduct.setProductId(newProduct.getId());
         foodIntakeProduct.setWeight(weightProduct);
         
-        if (FoodIntakeProductLab.get().isSaved(foodIntake.getId(), product.getId())) {
-            FoodIntakeProductLab.get().update(foodIntakeProduct);
-        } else {
-            FoodIntakeProductLab.get().addFoodIntakeProduct(foodIntakeProduct);
-        }
+        FoodIntakeProductLab.get().saveNew(foodIntakeProduct);
     }
     
-    private void displayCalculation(View productRootView, double weightProduct) {
+    private void displayCalculation(View productRootView, double weightNewProduct) {
         TextView proteinsTextView = productRootView.findViewById(R.id.product_row_proteins);
         TextView fatsTextView = productRootView.findViewById(R.id.product_row_fats);
         TextView carbohydratesTextView = productRootView.findViewById(R.id.product_row_carbohydrates);
         TextView glycemicIndexTextView = productRootView.findViewById(R.id.product_row_glycemic_idx);
         Spinner productCountUnitSpinner = productRootView.findViewById(R.id.product_row_count_unit);
-        LinearLayout linearLayout2 = productRootView.findViewById(R.id.add_food_intake_resume_wrapper);
+        LinearLayout linearLayout2 = productRootView.findViewById(R.id.linearLayout2);
         LinearLayout linearLayout3 = productRootView.findViewById(R.id.linearLayout3);
         
         String productCountUnit = (String) productCountUnitSpinner.getSelectedItem();
         
-        if (product.getGlycemicIndex() > 0) {
-            glycemicIndexTextView.setText(String.valueOf(product.getGlycemicIndex()));
+        if (newProduct.getGlycemicIndex() > 0) {
+            glycemicIndexTextView.setText(String.valueOf(newProduct.getGlycemicIndex()));
             linearLayout3.setVisibility(View.VISIBLE);
         }
         
-        proteinsTextView.setText(calcElements(product.getProteins(), weightProduct, productCountUnit));
-        fatsTextView.setText(calcElements(product.getFats(), weightProduct, productCountUnit));
-        carbohydratesTextView.setText(calcElements(product.getCarbohydrates(), weightProduct, productCountUnit));
+        proteinsTextView.setText(formatDouble(calcElement(newProduct.getProteins(), weightNewProduct, productCountUnit)));
+        fatsTextView.setText(formatDouble(calcElement(newProduct.getFats(), weightNewProduct, productCountUnit)));
+        carbohydratesTextView.setText(formatDouble(calcElement(newProduct.getCarbohydrates(), weightNewProduct, productCountUnit)));
         linearLayout2.setVisibility(View.VISIBLE);
+        
+        displaySumCalculation(weightNewProduct);
     }
     
-    private String calcElements(double absAmountElement, double weightProduct, String productCountUnit) {
+    private void displaySumCalculation(double weightNewProduct) {
+        calcSumElements(weightNewProduct);
+        
+        binding.addFoodIntakeProteins.setText(formatDouble(sumProteins));
+        binding.addFoodIntakeFats.setText(formatDouble(sumFats));
+        binding.addFoodIntakeCarbohydrates.setText(formatDouble(sumCarbohydrates));
+        
+        binding.addFoodIntakeResumeWrapper.setVisibility(View.VISIBLE);
+    }
+    
+    private void calcSumElements(double weightNewProduct) {
+        Map<Product, Double> productsForFoodIntake = FoodIntakeProductLab.get().getProductsForFoodIntake(foodIntake.getId());
+        
+        sumProteins = 0;
+        sumFats = 0;
+        sumCarbohydrates = 0;
+        
+        for (Map.Entry<Product, Double> entry : productsForFoodIntake.entrySet()) {
+            sumProteins += entry.getKey().getProteins() * entry.getValue() / 100;
+            sumFats += entry.getKey().getFats() * entry.getValue() / 100;
+            sumCarbohydrates += entry.getKey().getCarbohydrates() * entry.getValue() / 100;
+        }
+        
+        sumProteins += newProduct.getProteins() * weightNewProduct / 100;
+        sumFats += newProduct.getFats() * weightNewProduct / 100;
+        sumCarbohydrates += newProduct.getCarbohydrates() * weightNewProduct / 100;
+    }
+    
+    private double calcElement(double absAmountElement, double weightProduct, String productCountUnit) {
+        return (getWeightProduct(weightProduct, productCountUnit) * absAmountElement) / 100;
+    }
+    
+    private double getWeightProduct(double weightProduct, String productCountUnit) {
         if (productCountUnit.equals(getString(R.string.product_count_milligram))) {
             weightProduct /= 1000;
         } else if (productCountUnit.equals(getString(R.string.product_count_pcs))) {
@@ -231,9 +281,10 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
         } else if (productCountUnit.equals(getString(R.string.product_count_table_spoon))) {
             weightProduct *= 8;
         }
-        
-        double result = weightProduct * absAmountElement / 100;
-        
+        return weightProduct;
+    }
+    
+    private String formatDouble(double result) {
         return String.format(Locale.getDefault(), "%1$,.2f", result);
     }
     
@@ -275,5 +326,23 @@ public class AddFoodIntakeActivity extends AppCompatActivity implements AdapterV
         saveFoodIntake(foodIntake);
         
         updateDate();
+    }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.add_food_intake_menu, menu);
+        
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.complete:
+                finish();
+                break;
+        }
+        
+        return super.onOptionsItemSelected(item);
     }
 }
