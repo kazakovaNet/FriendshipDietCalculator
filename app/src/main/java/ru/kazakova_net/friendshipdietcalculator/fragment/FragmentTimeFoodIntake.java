@@ -11,7 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.RadioGroup;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,7 +45,7 @@ public class FragmentTimeFoodIntake extends Fragment {
         args.putLong(ARG_FOOD_INTAKE_ID, foodIntakeId);
         FragmentTimeFoodIntake fragment = new FragmentTimeFoodIntake();
         fragment.setArguments(args);
-    
+        
         return fragment;
     }
     
@@ -55,21 +55,36 @@ public class FragmentTimeFoodIntake extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_time_food_intake, container, false);
         
         foodIntake = FoodIntakeLab.get().getById(getArguments().getLong(ARG_FOOD_INTAKE_ID));
-    
-        binding.addFoodIntakeTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        
+        binding.addFoodIntakeTypeRadioGrp.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String foodIntakeType = (String) adapterView.getItemAtPosition(i);
+            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+                String foodIntakeType = "";
+                
+                switch (checkedId) {
+                    case R.id.add_food_intake_type_breakfast_radio_btn:
+                        foodIntakeType = getActivity().getString(R.string.type_intake_breakfast);
+                        break;
+                    case R.id.add_food_intake_type_lunch_radio_btn:
+                        foodIntakeType = getActivity().getString(R.string.type_intake_lunch);
+                        break;
+                    case R.id.add_food_intake_type_dinner_radio_btn:
+                        foodIntakeType = getActivity().getString(R.string.type_intake_dinner);
+                        break;
+                    case R.id.add_food_intake_type_afternoon_tea_radio_btn:
+                        foodIntakeType = getActivity().getString(R.string.type_intake_afternoon_tea);
+                        break;
+                    case R.id.add_food_intake_type_supper_radio_btn:
+                        foodIntakeType = getActivity().getString(R.string.type_intake_supper);
+                        break;
+                }
+                
                 foodIntake.setType(foodIntakeType);
                 
                 saveFoodIntake(foodIntake);
             }
-            
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            
-            }
         });
+        
         binding.addFoodIntakeDateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -64,13 +64,6 @@ public class FragmentProductsFoodIntake extends Fragment {
         
         foodIntakeId = getArguments().getLong(ARG_FOOD_INTAKE_ID);
         
-        binding.addFoodIntakeAddProductRowBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addProductRow();
-            }
-        });
-        
         addProductRow();
         
         return binding.getRoot();

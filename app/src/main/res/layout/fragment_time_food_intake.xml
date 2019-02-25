@@ -9,8 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Spinner
-            android:id="@+id/add_food_intake_type_spinner"
+        <RadioGroup
+            android:id="@+id/add_food_intake_type_radio_grp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -18,36 +18,83 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:entries="@array/type_food_intake"
-            android:spinnerMode="dropdown"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/add_food_intake_date_btn"
-            style="@style/Widget.AppCompat.Button.Colored"
+            <RadioButton
+                android:id="@+id/add_food_intake_type_breakfast_radio_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/type_intake_breakfast"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="26dp"
+                tools:layout_editor_absoluteY="203dp" />
+
+            <RadioButton
+                android:id="@+id/add_food_intake_type_lunch_radio_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/type_intake_lunch"
+                android:textSize="18sp" />
+
+            <RadioButton
+                android:id="@+id/add_food_intake_type_dinner_radio_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/type_intake_dinner"
+                android:textSize="18sp" />
+
+            <RadioButton
+                android:id="@+id/add_food_intake_type_afternoon_tea_radio_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/type_intake_afternoon_tea"
+                android:textSize="18sp" />
+
+            <RadioButton
+                android:id="@+id/add_food_intake_type_supper_radio_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/type_intake_supper"
+                android:textSize="18sp" />
+        </RadioGroup>
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/add_food_intake_type_spinner"
-            tools:text="15 февраля 2019 г" />
-
-        <Button
-            android:id="@+id/add_food_intake_time_btn"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/add_food_intake_type_spinner"
-            tools:text="08:30" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_food_intake_type_radio_grp">
+
+            <Button
+                android:id="@+id/add_food_intake_date_btn"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                tools:text="15 февраля 2019 г" />
+
+            <Button
+                android:id="@+id/add_food_intake_time_btn"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                tools:text="08:30" />
+        </LinearLayout>
 
     </android.support.constraint.ConstraintLayout>
 </layout>
