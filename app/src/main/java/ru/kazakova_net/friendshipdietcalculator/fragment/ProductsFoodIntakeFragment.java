@@ -26,12 +26,13 @@ import java.util.Map;
 import ru.kazakova_net.friendshipdietcalculator.R;
 import ru.kazakova_net.friendshipdietcalculator.databinding.ProductsFoodIntakeFragmentBinding;
 import ru.kazakova_net.friendshipdietcalculator.model.FoodIntakeProduct;
-import ru.kazakova_net.friendshipdietcalculator.model.FoodIntakeProductLab;
+import ru.kazakova_net.friendshipdietcalculator.model.lab.FoodIntakeProductLab;
 import ru.kazakova_net.friendshipdietcalculator.model.Product;
-import ru.kazakova_net.friendshipdietcalculator.model.ProductLab;
+import ru.kazakova_net.friendshipdietcalculator.model.lab.ProductLab;
 import ru.kazakova_net.friendshipdietcalculator.util.CommonUtil;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
+import static ru.kazakova_net.friendshipdietcalculator.util.CommonUtil.formatDouble;
 
 /**
  * Created by nkazakova on 25/02/2019.
@@ -199,9 +200,7 @@ public class ProductsFoodIntakeFragment extends Fragment {
         FoodIntakeProductLab.get().saveNew(foodIntakeProduct);
     }
     
-    private String formatDouble(double result) {
-        return String.format(Locale.getDefault(), "%1$,.2f", result);
-    }
+    
     
     private double calcElement(double absAmountElement, double weightProduct, String productCountUnit) {
         return (getWeightProduct(weightProduct, productCountUnit) * absAmountElement) / 100;

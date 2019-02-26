@@ -12,6 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <activity android:name=".activity.ExportDataActivity"
+            android:label="@string/export_data_activity_label"/>
         <activity
             android:name=".activity.ListFoodIntakesActivity"
             android:label="@string/list_food_intakes_label"

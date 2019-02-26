@@ -14,7 +14,7 @@ import ru.kazakova_net.friendshipdietcalculator.R;
 import ru.kazakova_net.friendshipdietcalculator.adapter.AddFoodIntakeViewPagerAdapter;
 import ru.kazakova_net.friendshipdietcalculator.databinding.AddFoodIntakeActivityBinding;
 import ru.kazakova_net.friendshipdietcalculator.model.FoodIntake;
-import ru.kazakova_net.friendshipdietcalculator.model.FoodIntakeLab;
+import ru.kazakova_net.friendshipdietcalculator.model.lab.FoodIntakeLab;
 import ru.kazakova_net.friendshipdietcalculator.util.CommonUtil;
 
 public class AddFoodIntakeActivity extends AppCompatActivity {

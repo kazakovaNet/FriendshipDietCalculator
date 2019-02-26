@@ -11,17 +11,17 @@ import android.view.View;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import ru.kazakova_net.friendshipdietcalculator.R;
 import ru.kazakova_net.friendshipdietcalculator.adapter.FoodIntakesAdapter;
 import ru.kazakova_net.friendshipdietcalculator.databinding.ListFoodIntakesActivityBinding;
 import ru.kazakova_net.friendshipdietcalculator.fragment.DatePickerFragment;
-import ru.kazakova_net.friendshipdietcalculator.model.FoodIntakeLab;
+import ru.kazakova_net.friendshipdietcalculator.model.lab.FoodIntakeLab;
+import ru.kazakova_net.friendshipdietcalculator.util.TimeUtil;
 
 public class ListFoodIntakesActivity extends AppCompatActivity {
     
@@ -70,24 +70,10 @@ public class ListFoodIntakesActivity extends AppCompatActivity {
     }
     
     private void filterList() {
-        Calendar sourceCalendar = Calendar.getInstance();
-        sourceCalendar.setTime(filterDate);
-        
-        GregorianCalendar gregorianCalendar = new GregorianCalendar();
-        gregorianCalendar.set(Calendar.YEAR, sourceCalendar.get(Calendar.YEAR));
-        gregorianCalendar.set(Calendar.MONTH, sourceCalendar.get(Calendar.MONTH));
-        gregorianCalendar.set(Calendar.DAY_OF_MONTH, sourceCalendar.get(Calendar.DAY_OF_MONTH));
-        gregorianCalendar.set(Calendar.HOUR_OF_DAY, 0);
-        gregorianCalendar.set(Calendar.MINUTE, 0);
-        gregorianCalendar.set(Calendar.SECOND, 0);
-        
-        long timeMillisStart = gregorianCalendar.getTimeInMillis();
-        
-        gregorianCalendar.set(Calendar.HOUR_OF_DAY, 23);
-        gregorianCalendar.set(Calendar.MINUTE, 59);
-        gregorianCalendar.set(Calendar.SECOND, 59);
-        
-        long timeMillisEnd = gregorianCalendar.getTimeInMillis();
+        Map<String, Long> rangeDay = TimeUtil.getRangeDay(filterDate);
+    
+        long timeMillisStart = rangeDay.get(TimeUtil.TIME_START_KEY);
+        long timeMillisEnd = rangeDay.get(TimeUtil.TIME_END_KEY);
         
         List<String> typeConditions = new ArrayList<>();
         if (binding.listFoodIntakesType1Chk.isChecked()) {

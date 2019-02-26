@@ -1,8 +1,9 @@
-package ru.kazakova_net.friendshipdietcalculator.model;
+package ru.kazakova_net.friendshipdietcalculator.model.lab;
 
 import java.util.List;
 
 import ru.kazakova_net.friendshipdietcalculator.application.App;
+import ru.kazakova_net.friendshipdietcalculator.model.FoodIntake;
 
 /**
  * Created by nkazakova on 15/02/2019.
@@ -39,8 +40,12 @@ public class FoodIntakeLab {
         return App.getAppDatabase().foodIntakeDao().getAll();
     }
     
+    public List<FoodIntake> getByTimeRange(long timeMillisStart, long timeMillisEnd) {
+        return App.getAppDatabase().foodIntakeDao().getByDateRange(timeMillisStart, timeMillisEnd);
+    }
+    
     public List<FoodIntake> getByTimeRangeAndType(long timeMillisStart, long timeMillisEnd, List<String> typeCondition) {
-        return App.getAppDatabase().foodIntakeDao().getByDate(timeMillisStart, timeMillisEnd, typeCondition);
+        return App.getAppDatabase().foodIntakeDao().getByDateRangeAndType(timeMillisStart, timeMillisEnd, typeCondition);
     }
     
     public void truncate() {

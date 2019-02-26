@@ -12,9 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ru.kazakova_net.friendshipdietcalculator.R;
+import ru.kazakova_net.friendshipdietcalculator.activity.AddFoodIntakeActivity;
 import ru.kazakova_net.friendshipdietcalculator.databinding.NoteFoodIntakeFragmentBinding;
 import ru.kazakova_net.friendshipdietcalculator.model.FoodIntake;
-import ru.kazakova_net.friendshipdietcalculator.model.FoodIntakeLab;
+import ru.kazakova_net.friendshipdietcalculator.model.lab.FoodIntakeLab;
 
 /**
  * Created by nkazakova on 25/02/2019.
@@ -63,5 +64,12 @@ public class NoteFoodIntakeFragment extends Fragment {
         });
         
         return binding.getRoot();
+    }
+    
+    @Override
+    public void onPause() {
+        super.onPause();
+        
+        AddFoodIntakeActivity.saveFoodIntake(foodIntake);
     }
 }

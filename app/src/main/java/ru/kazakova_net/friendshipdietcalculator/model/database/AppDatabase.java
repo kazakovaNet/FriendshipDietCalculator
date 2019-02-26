@@ -1,7 +1,14 @@
-package ru.kazakova_net.friendshipdietcalculator.model;
+package ru.kazakova_net.friendshipdietcalculator.model.database;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
+
+import ru.kazakova_net.friendshipdietcalculator.model.FoodIntake;
+import ru.kazakova_net.friendshipdietcalculator.model.FoodIntakeProduct;
+import ru.kazakova_net.friendshipdietcalculator.model.Product;
+import ru.kazakova_net.friendshipdietcalculator.model.dao.FoodIntakeDao;
+import ru.kazakova_net.friendshipdietcalculator.model.dao.FoodIntakeProductDao;
+import ru.kazakova_net.friendshipdietcalculator.model.dao.ProductDao;
 
 /**
  * Created by nkazakova on 14/02/2019.

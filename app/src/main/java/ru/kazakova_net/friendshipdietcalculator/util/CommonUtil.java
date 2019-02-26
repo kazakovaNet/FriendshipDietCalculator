@@ -5,6 +5,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import java.util.Locale;
+
 /**
  * Created by nkazakova on 15/02/2019.
  */
@@ -38,5 +40,13 @@ public class CommonUtil {
             view.clearFocus();
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+    
+    public static String formatDouble(double result) {
+        return String.format(Locale.getDefault(), "%1$,.2f", result);
+    }
+    
+    public static String formatShortDouble(double result) {
+        return String.format(Locale.getDefault(), "%1$,.0f", result);
     }
 }

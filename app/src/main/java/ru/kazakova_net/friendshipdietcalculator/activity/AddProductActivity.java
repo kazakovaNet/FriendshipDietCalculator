@@ -12,7 +12,7 @@ import android.view.View;
 import ru.kazakova_net.friendshipdietcalculator.R;
 import ru.kazakova_net.friendshipdietcalculator.databinding.AddProductActivityBinding;
 import ru.kazakova_net.friendshipdietcalculator.model.Product;
-import ru.kazakova_net.friendshipdietcalculator.model.ProductLab;
+import ru.kazakova_net.friendshipdietcalculator.model.lab.ProductLab;
 
 public class AddProductActivity extends AppCompatActivity implements View.OnClickListener {
     

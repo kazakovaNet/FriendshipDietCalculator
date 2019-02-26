@@ -50,4 +50,8 @@ public class FoodIntake {
     public void setNote(String note) {
         this.note = note;
     }
+    
+    public boolean hasNote() {
+        return !(this.note == null || this.note.equals(""));
+    }
 }

@@ -10,9 +10,9 @@ import android.view.View;
 
 import ru.kazakova_net.friendshipdietcalculator.R;
 import ru.kazakova_net.friendshipdietcalculator.databinding.MainActivityBinding;
-import ru.kazakova_net.friendshipdietcalculator.model.FoodIntakeLab;
-import ru.kazakova_net.friendshipdietcalculator.model.FoodIntakeProductLab;
-import ru.kazakova_net.friendshipdietcalculator.model.ProductLab;
+import ru.kazakova_net.friendshipdietcalculator.model.lab.FoodIntakeLab;
+import ru.kazakova_net.friendshipdietcalculator.model.lab.FoodIntakeProductLab;
+import ru.kazakova_net.friendshipdietcalculator.model.lab.ProductLab;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     
@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         binding.mainMenuAddFoodIntakeBtn.setOnClickListener(this);
         binding.mainMenuAddProductBtn.setOnClickListener(this);
         binding.mainMenuListFoodIntakeBtn.setOnClickListener(this);
+        binding.mainMenuExportDataBtn.setOnClickListener(this);
     }
     
     @Override
@@ -44,6 +45,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.main_menu_list_food_intake_btn:
                 intent = ListFoodIntakesActivity.getIntent(MainActivity.this);
+                startActivity(intent);
+                break;
+            case R.id.main_menu_export_data_btn:
+                intent = ExportDataActivity.getIntent(MainActivity.this);
                 startActivity(intent);
                 break;
         }

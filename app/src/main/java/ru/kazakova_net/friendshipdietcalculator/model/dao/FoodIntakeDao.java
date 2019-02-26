@@ -1,4 +1,4 @@
-package ru.kazakova_net.friendshipdietcalculator.model;
+package ru.kazakova_net.friendshipdietcalculator.model.dao;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
@@ -7,6 +7,8 @@ import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
 import java.util.List;
+
+import ru.kazakova_net.friendshipdietcalculator.model.FoodIntake;
 
 /**
  * Created by nkazakova on 15/02/2019.
@@ -32,5 +34,8 @@ public interface FoodIntakeDao {
     FoodIntake getById(long foodIntakeId);
     
     @Query("SELECT * FROM food_intake WHERE (time_millis BETWEEN :timeMillisStart AND :timeMillisEnd) AND type IN (:typeCondition)")
-    List<FoodIntake> getByDate(long timeMillisStart, long timeMillisEnd, List<String> typeCondition);
+    List<FoodIntake> getByDateRangeAndType(long timeMillisStart, long timeMillisEnd, List<String> typeCondition);
+    
+    @Query("SELECT * FROM food_intake WHERE time_millis BETWEEN :timeMillisStart AND :timeMillisEnd")
+    List<FoodIntake> getByDateRange(long timeMillisStart, long timeMillisEnd);
 }

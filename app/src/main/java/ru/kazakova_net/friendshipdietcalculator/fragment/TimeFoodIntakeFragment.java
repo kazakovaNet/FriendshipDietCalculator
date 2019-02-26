@@ -20,7 +20,9 @@ import java.util.Locale;
 import ru.kazakova_net.friendshipdietcalculator.R;
 import ru.kazakova_net.friendshipdietcalculator.databinding.TimeFoodIntakeFragmentBinding;
 import ru.kazakova_net.friendshipdietcalculator.model.FoodIntake;
-import ru.kazakova_net.friendshipdietcalculator.model.FoodIntakeLab;
+import ru.kazakova_net.friendshipdietcalculator.model.lab.FoodIntakeLab;
+
+import static ru.kazakova_net.friendshipdietcalculator.activity.AddFoodIntakeActivity.saveFoodIntake;
 
 /**
  * Created by nkazakova on 25/02/2019.
@@ -49,22 +51,14 @@ public class TimeFoodIntakeFragment extends Fragment {
         return fragment;
     }
     
-    public static long saveFoodIntake(FoodIntake foodIntake) {
-        if (FoodIntakeLab.get().isSaved(foodIntake.getId())) {
-            FoodIntakeLab.get().update(foodIntake);
-            
-            return foodIntake.getId();
-        } else {
-            return FoodIntakeLab.get().add(foodIntake);
-        }
-    }
-    
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_time_food_intake, container, false);
         
         foodIntake = FoodIntakeLab.get().getById(getArguments().getLong(ARG_FOOD_INTAKE_ID));
+        foodIntake.setType(getActivity().getString(R.string.type_intake_breakfast));
+        saveFoodIntake(foodIntake);
         
         binding.addFoodIntakeTypeRadioGrp.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

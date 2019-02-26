@@ -5,7 +5,7 @@ import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.migration.Migration;
 
-import ru.kazakova_net.friendshipdietcalculator.model.AppDatabase;
+import ru.kazakova_net.friendshipdietcalculator.model.database.AppDatabase;
 
 /**
  * Created by nkazakova on 14/02/2019.

@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import ru.kazakova_net.friendshipdietcalculator.R;
+import ru.kazakova_net.friendshipdietcalculator.activity.AddFoodIntakeActivity;
 import ru.kazakova_net.friendshipdietcalculator.fragment.NoteFoodIntakeFragment;
 import ru.kazakova_net.friendshipdietcalculator.fragment.ProductsFoodIntakeFragment;
 import ru.kazakova_net.friendshipdietcalculator.fragment.TimeFoodIntakeFragment;
@@ -24,12 +25,12 @@ public class AddFoodIntakeViewPagerAdapter extends FragmentPagerAdapter {
         super(fragmentManager);
         
         this.context = context;
+    
+        initFoodIntake();
     }
     
     @Override
     public Fragment getItem(int position) {
-        initFoodIntake();
-        
         if (position == 0) {
             return TimeFoodIntakeFragment.newInstance(foodIntake.getId());
         } else if (position == 1) {
@@ -59,7 +60,7 @@ public class AddFoodIntakeViewPagerAdapter extends FragmentPagerAdapter {
     private void initFoodIntake() {
         foodIntake = new FoodIntake();
         foodIntake.setTimeMillis(System.currentTimeMillis());
-        long foodIntakeId = TimeFoodIntakeFragment.saveFoodIntake(foodIntake);
+        long foodIntakeId = AddFoodIntakeActivity.saveFoodIntake(foodIntake);
         foodIntake.setId(foodIntakeId);
     }
 }

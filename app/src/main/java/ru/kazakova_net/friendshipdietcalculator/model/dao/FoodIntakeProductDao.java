@@ -1,4 +1,4 @@
-package ru.kazakova_net.friendshipdietcalculator.model;
+package ru.kazakova_net.friendshipdietcalculator.model.dao;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
@@ -7,6 +7,8 @@ import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
 import java.util.List;
+
+import ru.kazakova_net.friendshipdietcalculator.model.FoodIntakeProduct;
 
 /**
  * Created by nkazakova on 18/02/2019.

@@ -1,10 +1,12 @@
-package ru.kazakova_net.friendshipdietcalculator.model;
+package ru.kazakova_net.friendshipdietcalculator.model.lab;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import ru.kazakova_net.friendshipdietcalculator.application.App;
+import ru.kazakova_net.friendshipdietcalculator.model.FoodIntakeProduct;
+import ru.kazakova_net.friendshipdietcalculator.model.Product;
 
 /**
  * Created by nkazakova on 18/02/2019.
