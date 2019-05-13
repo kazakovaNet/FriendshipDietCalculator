@@ -67,4 +67,6 @@
     <string name="export_data_copy_btn_text">Копировать</string>
     <string name="export_data_buid_btn_text">Сформировать</string>
 
+    <string name="list_products_label">Сохраненные продукты</string>
+
 </resources>

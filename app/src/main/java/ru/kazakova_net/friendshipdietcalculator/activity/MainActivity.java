@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         
         binding.mainMenuAddFoodIntakeBtn.setOnClickListener(this);
         binding.mainMenuAddProductBtn.setOnClickListener(this);
+        binding.mainMenuListProductsBtn.setOnClickListener(this);
         binding.mainMenuListFoodIntakeBtn.setOnClickListener(this);
         binding.mainMenuExportDataBtn.setOnClickListener(this);
     }
@@ -35,6 +36,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
+            case R.id.main_menu_list_products_btn:
+                intent = ListProductsActivity.getIntent(MainActivity.this);
+                startActivity(intent);
+                break;
             case R.id.main_menu_add_product_btn:
                 intent = AddProductActivity.getIntent(MainActivity.this);
                 startActivity(intent);

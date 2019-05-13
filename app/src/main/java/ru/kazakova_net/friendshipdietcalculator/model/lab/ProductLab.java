@@ -29,7 +29,7 @@ public class ProductLab {
     
     public void addDummyProducts() {
         Product p1 = new Product();
-        p1.setTitle("Цыпленое, белое мясо без кожи");
+        p1.setTitle("Цыпленок, белое мясо без кожи");
         p1.setProteins(23.2);
         p1.setFats(1.7);
         p1.setCarbohydrates(0);

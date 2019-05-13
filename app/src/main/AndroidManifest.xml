@@ -25,6 +25,7 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activity.ListProductsActivity"
+            android:label="@string/list_products_label"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.AddProductActivity"
