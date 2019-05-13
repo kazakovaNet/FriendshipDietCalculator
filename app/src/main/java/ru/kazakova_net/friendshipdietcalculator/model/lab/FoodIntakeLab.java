@@ -55,4 +55,8 @@ public class FoodIntakeLab {
     public FoodIntake getById(long foodIntakeId) {
         return App.getAppDatabase().foodIntakeDao().getById(foodIntakeId);
     }
+    
+    public Long getNextRowId() {
+        return App.getAppDatabase().foodIntakeDao().getLastInsertRowId() + 1;
+    }
 }

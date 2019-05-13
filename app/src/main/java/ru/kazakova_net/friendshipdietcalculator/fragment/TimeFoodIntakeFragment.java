@@ -18,18 +18,14 @@ import java.util.Date;
 import java.util.Locale;
 
 import ru.kazakova_net.friendshipdietcalculator.R;
+import ru.kazakova_net.friendshipdietcalculator.activity.AddFoodIntakeActivity;
 import ru.kazakova_net.friendshipdietcalculator.databinding.TimeFoodIntakeFragmentBinding;
 import ru.kazakova_net.friendshipdietcalculator.model.FoodIntake;
-import ru.kazakova_net.friendshipdietcalculator.model.lab.FoodIntakeLab;
-
-import static ru.kazakova_net.friendshipdietcalculator.activity.AddFoodIntakeActivity.saveFoodIntake;
 
 /**
  * Created by nkazakova on 25/02/2019.
  */
 public class TimeFoodIntakeFragment extends Fragment {
-    
-    private static final String ARG_FOOD_INTAKE_ID = "food_intake_id";
     
     private static final String DIALOG_TIME = "DialogTime";
     private static final String DIALOG_DATE = "DialogDate";
@@ -42,13 +38,8 @@ public class TimeFoodIntakeFragment extends Fragment {
     public TimeFoodIntakeFragment() {
     }
     
-    public static TimeFoodIntakeFragment newInstance(long foodIntakeId) {
-        Bundle args = new Bundle();
-        args.putLong(ARG_FOOD_INTAKE_ID, foodIntakeId);
-        TimeFoodIntakeFragment fragment = new TimeFoodIntakeFragment();
-        fragment.setArguments(args);
-        
-        return fragment;
+    public static TimeFoodIntakeFragment newInstance() {
+        return new TimeFoodIntakeFragment();
     }
     
     @Nullable
@@ -56,9 +47,8 @@ public class TimeFoodIntakeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_time_food_intake, container, false);
         
-        foodIntake = FoodIntakeLab.get().getById(getArguments().getLong(ARG_FOOD_INTAKE_ID));
+        foodIntake = AddFoodIntakeActivity.getFoodIntake();
         foodIntake.setType(getActivity().getString(R.string.type_intake_breakfast));
-        saveFoodIntake(foodIntake);
         
         binding.addFoodIntakeTypeRadioGrp.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -84,8 +74,6 @@ public class TimeFoodIntakeFragment extends Fragment {
                 }
                 
                 foodIntake.setType(foodIntakeType);
-                
-                saveFoodIntake(foodIntake);
             }
         });
         
@@ -145,14 +133,12 @@ public class TimeFoodIntakeFragment extends Fragment {
     
     public void onTimeSelect(Date time) {
         foodIntake.setTimeMillis(time.getTime());
-        saveFoodIntake(foodIntake);
         
         updateTime();
     }
     
     public void onDateSelect(Date date) {
         foodIntake.setTimeMillis(date.getTime());
-        saveFoodIntake(foodIntake);
         
         updateDate();
     }

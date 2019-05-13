@@ -38,4 +38,7 @@ public interface FoodIntakeDao {
     
     @Query("SELECT * FROM food_intake WHERE time_millis BETWEEN :timeMillisStart AND :timeMillisEnd")
     List<FoodIntake> getByDateRange(long timeMillisStart, long timeMillisEnd);
+    
+    @Query("select last_insert_rowid()")
+    Long getLastInsertRowId();
 }

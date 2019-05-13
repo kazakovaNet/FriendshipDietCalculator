@@ -57,6 +57,8 @@ public class ExportDataActivity extends AppCompatActivity {
         binding.exportDataBuildBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                resetSumElements();
+    
                 buildExportString();
             }
         });
@@ -80,6 +82,12 @@ public class ExportDataActivity extends AppCompatActivity {
         });
         
         updateDate();
+    }
+    
+    private void resetSumElements() {
+        sumProteins = 0;
+        sumFats = 0;
+        sumCarbohydrates = 0;
     }
     
     private void buildExportString() {

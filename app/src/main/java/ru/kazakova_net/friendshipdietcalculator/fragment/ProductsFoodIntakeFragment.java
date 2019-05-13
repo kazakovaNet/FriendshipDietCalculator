@@ -20,14 +20,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import ru.kazakova_net.friendshipdietcalculator.R;
+import ru.kazakova_net.friendshipdietcalculator.activity.AddFoodIntakeActivity;
 import ru.kazakova_net.friendshipdietcalculator.databinding.ProductsFoodIntakeFragmentBinding;
 import ru.kazakova_net.friendshipdietcalculator.model.FoodIntakeProduct;
-import ru.kazakova_net.friendshipdietcalculator.model.lab.FoodIntakeProductLab;
 import ru.kazakova_net.friendshipdietcalculator.model.Product;
+import ru.kazakova_net.friendshipdietcalculator.model.lab.FoodIntakeProductLab;
 import ru.kazakova_net.friendshipdietcalculator.model.lab.ProductLab;
 import ru.kazakova_net.friendshipdietcalculator.util.CommonUtil;
 
@@ -39,8 +39,6 @@ import static ru.kazakova_net.friendshipdietcalculator.util.CommonUtil.formatDou
  */
 public class ProductsFoodIntakeFragment extends Fragment {
     
-    private static final String ARG_FOOD_INTAKE_ID = "food_intake_id";
-    
     private ProductsFoodIntakeFragmentBinding binding;
     private Product newProduct;
     private long foodIntakeId;
@@ -49,13 +47,8 @@ public class ProductsFoodIntakeFragment extends Fragment {
     private double sumFats;
     private double sumCarbohydrates;
     
-    public static ProductsFoodIntakeFragment newInstance(long foodIntakeId) {
-        Bundle args = new Bundle();
-        args.putLong(ARG_FOOD_INTAKE_ID, foodIntakeId);
-        ProductsFoodIntakeFragment fragment = new ProductsFoodIntakeFragment();
-        fragment.setArguments(args);
-        
-        return fragment;
+    public static ProductsFoodIntakeFragment newInstance() {
+        return new ProductsFoodIntakeFragment();
     }
     
     @Nullable
@@ -63,7 +56,7 @@ public class ProductsFoodIntakeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_products_food_intake, container, false);
         
-        foodIntakeId = getArguments().getLong(ARG_FOOD_INTAKE_ID);
+        foodIntakeId = AddFoodIntakeActivity.getFoodIntake().getId();
         
         addProductRow();
         
@@ -199,7 +192,6 @@ public class ProductsFoodIntakeFragment extends Fragment {
         
         FoodIntakeProductLab.get().saveNew(foodIntakeProduct);
     }
-    
     
     
     private double calcElement(double absAmountElement, double weightProduct, String productCountUnit) {

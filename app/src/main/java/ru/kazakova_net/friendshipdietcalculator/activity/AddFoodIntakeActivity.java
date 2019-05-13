@@ -23,13 +23,24 @@ public class AddFoodIntakeActivity extends AppCompatActivity {
         return new Intent(context, AddFoodIntakeActivity.class);
     }
     
-    public static long saveFoodIntake(FoodIntake foodIntake) {
+    private static FoodIntake foodIntake;
+    
+    private static void setFoodIntake() {
+        foodIntake = new FoodIntake();
+        foodIntake.setTimeMillis(System.currentTimeMillis());
+        foodIntake.setId(FoodIntakeLab.get().getNextRowId());
+    }
+    
+    public static FoodIntake getFoodIntake(){
+        return foodIntake;
+    }
+    
+    private static void flashFoodIntake() {
         if (FoodIntakeLab.get().isSaved(foodIntake.getId())) {
             FoodIntakeLab.get().update(foodIntake);
-            
-            return foodIntake.getId();
+    
         } else {
-            return FoodIntakeLab.get().add(foodIntake);
+            FoodIntakeLab.get().add(foodIntake);
         }
     }
     
@@ -37,6 +48,8 @@ public class AddFoodIntakeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_food_intake);
+        
+        setFoodIntake();
         
         AddFoodIntakeActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_add_food_intake);
         AddFoodIntakeViewPagerAdapter adapter = new AddFoodIntakeViewPagerAdapter(this, getSupportFragmentManager());
@@ -64,6 +77,8 @@ public class AddFoodIntakeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.complete:
+                flashFoodIntake();
+                
                 finish();
                 break;
         }

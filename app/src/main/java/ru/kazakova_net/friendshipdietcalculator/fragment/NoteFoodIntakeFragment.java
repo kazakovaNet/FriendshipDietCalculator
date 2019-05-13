@@ -30,13 +30,8 @@ public class NoteFoodIntakeFragment extends Fragment {
     public NoteFoodIntakeFragment() {
     }
     
-    public static NoteFoodIntakeFragment newInstance(long foodIntakeId) {
-        Bundle args = new Bundle();
-        args.putLong(ARG_FOOD_INTAKE_ID, foodIntakeId);
-        NoteFoodIntakeFragment fragment = new NoteFoodIntakeFragment();
-        fragment.setArguments(args);
-        
-        return fragment;
+    public static NoteFoodIntakeFragment newInstance() {
+        return new NoteFoodIntakeFragment();
     }
     
     @Nullable
@@ -44,7 +39,7 @@ public class NoteFoodIntakeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_note_food_intake, container, false);
         
-        foodIntake = FoodIntakeLab.get().getById(getArguments().getLong(ARG_FOOD_INTAKE_ID));
+        foodIntake = AddFoodIntakeActivity.getFoodIntake();
         
         binding.addFoodIntakeNoteField.addTextChangedListener(new TextWatcher() {
             @Override
@@ -64,12 +59,5 @@ public class NoteFoodIntakeFragment extends Fragment {
         });
         
         return binding.getRoot();
-    }
-    
-    @Override
-    public void onPause() {
-        super.onPause();
-        
-        AddFoodIntakeActivity.saveFoodIntake(foodIntake);
     }
 }
