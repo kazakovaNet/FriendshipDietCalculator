@@ -64,6 +64,7 @@
     <string name="note_food_intake_fragment_title">Заметка</string>
     <string name="main_menu_export_day_btn_text">Экспорт данных</string>
     <string name="export_data_activity_label">Экспорт данных</string>
-    <string name="export_data_copy_btn_text">Копировать в буфер</string>
+    <string name="export_data_copy_btn_text">Копировать</string>
+    <string name="export_data_buid_btn_text">Сформировать</string>
 
 </resources>

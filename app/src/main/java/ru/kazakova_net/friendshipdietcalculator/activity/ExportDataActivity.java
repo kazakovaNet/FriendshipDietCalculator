@@ -1,11 +1,14 @@
 package ru.kazakova_net.friendshipdietcalculator.activity;
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -17,6 +20,7 @@ import java.util.Map;
 
 import ru.kazakova_net.friendshipdietcalculator.R;
 import ru.kazakova_net.friendshipdietcalculator.databinding.ExportDataActivityBinding;
+import ru.kazakova_net.friendshipdietcalculator.fragment.DatePickerFragment;
 import ru.kazakova_net.friendshipdietcalculator.model.FoodIntake;
 import ru.kazakova_net.friendshipdietcalculator.model.Product;
 import ru.kazakova_net.friendshipdietcalculator.model.lab.FoodIntakeLab;
@@ -28,10 +32,16 @@ import static ru.kazakova_net.friendshipdietcalculator.util.CommonUtil.formatSho
 
 public class ExportDataActivity extends AppCompatActivity {
     
+    private static final String DIALOG_DATE = "DialogDate";
+    private static final int REQUEST_DATE = 0;
+    
     private ExportDataActivityBinding binding;
     private double sumProteins;
     private double sumFats;
     private double sumCarbohydrates;
+    
+    private Date filterDate = new Date();
+    private String resultString = "";
     
     public static Intent getIntent(Context context) {
         return new Intent(context, ExportDataActivity.class);
@@ -42,11 +52,39 @@ public class ExportDataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_export_data);
         
-        final StringBuilder stringBuilder = new StringBuilder();
-        
         binding = DataBindingUtil.setContentView(this, R.layout.activity_export_data);
         
-        Map<String, Long> rangeDay = TimeUtil.getRangeDay(new Date());
+        binding.exportDataBuildBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                buildExportString();
+            }
+        });
+        
+        binding.exportDataDateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager manager = getSupportFragmentManager();
+                DatePickerFragment dialog = DatePickerFragment.newInstance(filterDate);
+                dialog.show(manager, DIALOG_DATE);
+            }
+        });
+        
+        binding.exportDataCopyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("123", resultString);
+                clipboard.setPrimaryClip(clip);
+            }
+        });
+        
+        updateDate();
+    }
+    
+    private void buildExportString() {
+        final StringBuilder stringBuilder = new StringBuilder();
+        Map<String, Long> rangeDay = TimeUtil.getRangeDay(filterDate);
         
         long timeMillisStart = rangeDay.get(TimeUtil.TIME_START_KEY);
         long timeMillisEnd = rangeDay.get(TimeUtil.TIME_END_KEY);
@@ -103,15 +141,10 @@ public class ExportDataActivity extends AppCompatActivity {
                 .append("Углеводы - ")
                 .append(formatDouble(sumCarbohydrates));
         
-        binding.textView.setText(stringBuilder.toString());
-        binding.exportDataCopyBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ClipboardManager clipboard = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("123", stringBuilder.toString());
-                clipboard.setPrimaryClip(clip);
-            }
-        });
+        resultString = stringBuilder.toString();
+        
+        binding.exportDataResultText.setText(resultString);
+        binding.exportDataResultText.setVisibility(View.VISIBLE);
     }
     
     private void calcSumElements(Map<Product, Double> productsForFoodIntake) {
@@ -126,5 +159,30 @@ public class ExportDataActivity extends AppCompatActivity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH.mm", Locale.getDefault());
         
         return dateFormat.format(timeMillis);
+    }
+    
+    private void updateDate() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy г", Locale.getDefault());
+        
+        binding.exportDataDateBtn.setText(dateFormat.format(filterDate));
+    }
+    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        String s = "";
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+        if (requestCode == REQUEST_DATE) {
+            Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+            
+            onDateSelect(date);
+        }
+    }
+    
+    public void onDateSelect(Date date) {
+        filterDate = date;
+        
+        updateDate();
     }
 }
