@@ -1,14 +1,17 @@
 package ru.kazakova_net.friendshipdietcalculator.adapter;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
+import ru.kazakova_net.friendshipdietcalculator.activity.ViewFoodIntakeActivity;
 import ru.kazakova_net.friendshipdietcalculator.databinding.FoodIntakesListItemBinding;
 import ru.kazakova_net.friendshipdietcalculator.model.FoodIntake;
 
@@ -53,18 +56,27 @@ public class FoodIntakesAdapter extends RecyclerView.Adapter<FoodIntakesAdapter.
         notifyDataSetChanged();
     }
     
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         
         private FoodIntakesListItemBinding binding;
+        private FoodIntake foodIntake;
         
         ViewHolder(FoodIntakesListItemBinding binding) {
             super(binding.getRoot());
+            binding.getRoot().setOnClickListener(this);
             
             this.binding = binding;
         }
         
-        public void bind(FoodIntake foodIntake) {
-            binding.setFoodIntake(foodIntake);
+        public void bind(FoodIntake bindFoodIntake) {
+            foodIntake = bindFoodIntake;
+            binding.setFoodIntake(bindFoodIntake);
+        }
+    
+        @Override
+        public void onClick(View view) {
+            Intent intent = ViewFoodIntakeActivity.getStartIntent(view.getContext(), foodIntake.getId());
+            view.getContext().startActivity(intent);
         }
     }
 }
