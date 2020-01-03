@@ -2,45 +2,88 @@ package ru.kazakova_net.friendshipdietcalculator.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
+import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.inputmethod.InputMethodManager;
 
+import java.util.ArrayList;
+
 import ru.kazakova_net.friendshipdietcalculator.R;
 import ru.kazakova_net.friendshipdietcalculator.adapter.AddFoodIntakeViewPagerAdapter;
 import ru.kazakova_net.friendshipdietcalculator.databinding.AddFoodIntakeActivityBinding;
 import ru.kazakova_net.friendshipdietcalculator.model.FoodIntake;
+import ru.kazakova_net.friendshipdietcalculator.model.FoodIntakeProduct;
 import ru.kazakova_net.friendshipdietcalculator.model.lab.FoodIntakeLab;
+import ru.kazakova_net.friendshipdietcalculator.model.lab.FoodIntakeProductLab;
 import ru.kazakova_net.friendshipdietcalculator.util.CommonUtil;
 
 public class AddFoodIntakeActivity extends AppCompatActivity {
+    
+    private static FoodIntake foodIntake;
+    private static ArrayList<FoodIntakeProduct> foodIntakeProducts = new ArrayList<>();
     
     public static Intent getIntent(Context context) {
         return new Intent(context, AddFoodIntakeActivity.class);
     }
     
-    private static FoodIntake foodIntake;
-    
     private static void setFoodIntake() {
         foodIntake = new FoodIntake();
         foodIntake.setTimeMillis(System.currentTimeMillis());
-        foodIntake.setId(FoodIntakeLab.get().getNextRowId());
     }
     
-    public static FoodIntake getFoodIntake(){
+    public static void addFoodIntakeProduct(double weightProduct, long productId) {
+        boolean productExists = false;
+    
+        // TODO: 2019-05-14 replace for binary search
+        for (FoodIntakeProduct foodIntakeProduct : foodIntakeProducts) {
+            if (foodIntakeProduct.getProductId() == productId) {
+                foodIntakeProduct.setWeight(weightProduct);
+                productExists = true;
+                break;
+            }
+        }
+        
+        if (!productExists) {
+            FoodIntakeProduct foodIntakeProduct = new FoodIntakeProduct();
+            foodIntakeProduct.setProductId(productId);
+            foodIntakeProduct.setWeight(weightProduct);
+            foodIntakeProducts.add(foodIntakeProduct);
+        }
+    }
+    
+    public static FoodIntake getFoodIntake() {
         return foodIntake;
     }
     
+    public static ArrayList<FoodIntakeProduct> getFoodIntakeProducts() {
+        return foodIntakeProducts;
+    }
+    
     private static void flashFoodIntake() {
-        if (FoodIntakeLab.get().isSaved(foodIntake.getId())) {
+        long foodIntakeId = 0;
+        FoodIntake savedIntake = FoodIntakeLab.get().getSaved(foodIntake);
+        
+        if (savedIntake != null) {
+            foodIntakeId = savedIntake.getId();
+            foodIntake.setId(foodIntakeId);
+            
             FoodIntakeLab.get().update(foodIntake);
     
+            // TODO: 2019-05-14 update intake product
+            for (FoodIntakeProduct intakeProduct : foodIntakeProducts) {
+                FoodIntakeProductLab.get().update(intakeProduct);
+            }
         } else {
-            FoodIntakeLab.get().add(foodIntake);
+            foodIntakeId = FoodIntakeLab.get().add(foodIntake);
+            
+            for (FoodIntakeProduct intakeProduct : foodIntakeProducts) {
+                intakeProduct.setFoodIntakeId(foodIntakeId);
+                FoodIntakeProductLab.get().saveNew(intakeProduct);
+            }
         }
     }
     
@@ -75,12 +118,10 @@ public class AddFoodIntakeActivity extends AppCompatActivity {
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.complete:
-                flashFoodIntake();
-                
-                finish();
-                break;
+        if (item.getItemId() == R.id.complete) {
+            flashFoodIntake();
+            
+            finish();
         }
         
         return super.onOptionsItemSelected(item);

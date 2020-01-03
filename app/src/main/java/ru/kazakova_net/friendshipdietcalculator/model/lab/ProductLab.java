@@ -71,4 +71,8 @@ public class ProductLab {
     public List<Product> getAllProducts() {
         return App.getAppDatabase().productDao().getAll();
     }
+    
+    public Product getById(long productId) {
+        return App.getAppDatabase().productDao().getById(productId);
+    }
 }

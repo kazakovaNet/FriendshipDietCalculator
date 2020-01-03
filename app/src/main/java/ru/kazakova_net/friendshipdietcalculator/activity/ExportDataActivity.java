@@ -5,11 +5,11 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
+import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 
 import java.text.SimpleDateFormat;
@@ -58,7 +58,7 @@ public class ExportDataActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 resetSumElements();
-    
+                
                 buildExportString();
             }
         });

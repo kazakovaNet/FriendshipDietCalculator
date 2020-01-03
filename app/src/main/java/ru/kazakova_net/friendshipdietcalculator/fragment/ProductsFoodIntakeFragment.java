@@ -1,10 +1,10 @@
 package ru.kazakova_net.friendshipdietcalculator.fragment;
 
-import android.databinding.DataBindingUtil;
+import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,14 +20,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.List;
-import java.util.Map;
 
 import ru.kazakova_net.friendshipdietcalculator.R;
 import ru.kazakova_net.friendshipdietcalculator.activity.AddFoodIntakeActivity;
 import ru.kazakova_net.friendshipdietcalculator.databinding.ProductsFoodIntakeFragmentBinding;
 import ru.kazakova_net.friendshipdietcalculator.model.FoodIntakeProduct;
 import ru.kazakova_net.friendshipdietcalculator.model.Product;
-import ru.kazakova_net.friendshipdietcalculator.model.lab.FoodIntakeProductLab;
 import ru.kazakova_net.friendshipdietcalculator.model.lab.ProductLab;
 import ru.kazakova_net.friendshipdietcalculator.util.CommonUtil;
 
@@ -41,7 +39,6 @@ public class ProductsFoodIntakeFragment extends Fragment {
     
     private ProductsFoodIntakeFragmentBinding binding;
     private Product newProduct;
-    private long foodIntakeId;
     
     private double sumProteins;
     private double sumFats;
@@ -55,8 +52,6 @@ public class ProductsFoodIntakeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_products_food_intake, container, false);
-        
-        foodIntakeId = AddFoodIntakeActivity.getFoodIntake().getId();
         
         addProductRow();
         
@@ -134,7 +129,7 @@ public class ProductsFoodIntakeFragment extends Fragment {
                 
                 double weightProduct = Double.parseDouble(productCountTextView.getText().toString());
                 
-                saveFoodIntakeProduct(getWeightProduct(weightProduct, productCountUnit));
+                AddFoodIntakeActivity.addFoodIntakeProduct(getWeightProduct(weightProduct, productCountUnit), newProduct.getId());
                 
                 productAddButton.setVisibility(View.GONE);
                 productCalcButton.setVisibility(View.GONE);
@@ -184,31 +179,21 @@ public class ProductsFoodIntakeFragment extends Fragment {
         return weightProduct;
     }
     
-    private void saveFoodIntakeProduct(double weightProduct) {
-        FoodIntakeProduct foodIntakeProduct = new FoodIntakeProduct();
-        foodIntakeProduct.setFoodIntakeId(foodIntakeId);
-        foodIntakeProduct.setProductId(newProduct.getId());
-        foodIntakeProduct.setWeight(weightProduct);
-        
-        FoodIntakeProductLab.get().saveNew(foodIntakeProduct);
-    }
-    
     
     private double calcElement(double absAmountElement, double weightProduct, String productCountUnit) {
         return (getWeightProduct(weightProduct, productCountUnit) * absAmountElement) / 100;
     }
     
     private void calcSumElements(double weightNewProduct) {
-        Map<Product, Double> productsForFoodIntake = FoodIntakeProductLab.get().getProductsForFoodIntake(foodIntakeId);
-        
         sumProteins = 0;
         sumFats = 0;
         sumCarbohydrates = 0;
         
-        for (Map.Entry<Product, Double> entry : productsForFoodIntake.entrySet()) {
-            sumProteins += entry.getKey().getProteins() * entry.getValue() / 100;
-            sumFats += entry.getKey().getFats() * entry.getValue() / 100;
-            sumCarbohydrates += entry.getKey().getCarbohydrates() * entry.getValue() / 100;
+        for (FoodIntakeProduct intakeProduct : AddFoodIntakeActivity.getFoodIntakeProducts()) {
+            Product product = ProductLab.get().getById(intakeProduct.getProductId());
+            sumProteins += product.getProteins() * intakeProduct.getWeight() / 100;
+            sumFats += product.getFats() * intakeProduct.getWeight() / 100;
+            sumCarbohydrates += product.getCarbohydrates() * intakeProduct.getWeight() / 100;
         }
         
         sumProteins += newProduct.getProteins() * weightNewProduct / 100;

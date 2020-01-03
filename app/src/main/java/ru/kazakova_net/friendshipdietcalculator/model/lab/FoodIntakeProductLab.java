@@ -30,10 +30,6 @@ public class FoodIntakeProductLab {
         App.getAppDatabase().foodIntakeProductDao().insertAll(f);
     }
     
-    public boolean isSaved(long foodIntakeId, long productId) {
-        return App.getAppDatabase().foodIntakeProductDao().getByFoodIntakeIdAndProductId(foodIntakeId, productId).size() > 0;
-    }
-    
     public void update(FoodIntakeProduct foodIntakeProduct) {
         App.getAppDatabase().foodIntakeProductDao().updateAll(foodIntakeProduct);
     }

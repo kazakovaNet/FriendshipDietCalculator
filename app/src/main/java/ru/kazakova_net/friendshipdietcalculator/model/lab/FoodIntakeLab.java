@@ -1,9 +1,13 @@
 package ru.kazakova_net.friendshipdietcalculator.model.lab;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import ru.kazakova_net.friendshipdietcalculator.application.App;
 import ru.kazakova_net.friendshipdietcalculator.model.FoodIntake;
+import ru.kazakova_net.friendshipdietcalculator.util.TimeUtil;
 
 /**
  * Created by nkazakova on 15/02/2019.
@@ -28,8 +32,15 @@ public class FoodIntakeLab {
         return ids[0];
     }
     
-    public boolean isSaved(long foodIntakeId) {
-        return App.getAppDatabase().foodIntakeDao().getById(foodIntakeId) != null;
+    public FoodIntake getSaved(FoodIntake foodIntake) {
+        ArrayList<String> typeConditions = new ArrayList<>();
+        typeConditions.add(foodIntake.getType());
+        
+        Map<String, Long> rangeDay = TimeUtil.getRangeDay(new Date(foodIntake.getTimeMillis()));
+        
+        List<FoodIntake> list = FoodIntakeLab.get().getByTimeRangeAndType(rangeDay.get(TimeUtil.TIME_START_KEY), rangeDay.get(TimeUtil.TIME_END_KEY), typeConditions);
+        
+        return list.size() > 0 ? list.get(0) : null;
     }
     
     public void update(FoodIntake f) {
@@ -54,9 +65,5 @@ public class FoodIntakeLab {
     
     public FoodIntake getById(long foodIntakeId) {
         return App.getAppDatabase().foodIntakeDao().getById(foodIntakeId);
-    }
-    
-    public Long getNextRowId() {
-        return App.getAppDatabase().foodIntakeDao().getLastInsertRowId() + 1;
     }
 }

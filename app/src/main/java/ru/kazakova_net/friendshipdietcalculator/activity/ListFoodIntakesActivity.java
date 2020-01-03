@@ -2,11 +2,11 @@ package ru.kazakova_net.friendshipdietcalculator.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
+import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
+import androidx.fragment.app.FragmentManager;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import android.view.View;
 
 import java.text.SimpleDateFormat;
@@ -70,7 +70,7 @@ public class ListFoodIntakesActivity extends AppCompatActivity {
     
     private void filterList() {
         Map<String, Long> rangeDay = TimeUtil.getRangeDay(filterDate);
-    
+        
         long timeMillisStart = rangeDay.get(TimeUtil.TIME_START_KEY);
         long timeMillisEnd = rangeDay.get(TimeUtil.TIME_END_KEY);
         

@@ -12,7 +12,7 @@ import java.util.Map;
 public class TimeUtil {
     
     public static final String TIME_START_KEY = "time_start";
-    public static final String TIME_END_KEY = "time_End";
+    public static final String TIME_END_KEY = "time_end";
     
     public static Map<String, Long> getRangeDay(Date filterDate) {
         Map<String, Long> range = new HashMap<>();

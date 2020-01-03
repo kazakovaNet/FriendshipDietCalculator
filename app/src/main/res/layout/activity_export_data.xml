@@ -5,7 +5,7 @@
 
     <data class="ExportDataActivityBinding"/>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".activity.ExportDataActivity">
@@ -70,5 +70,5 @@
             app:layout_constraintStart_toEndOf="@+id/export_data_build_btn"
             app:layout_constraintTop_toBottomOf="@+id/export_data_result_text" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
